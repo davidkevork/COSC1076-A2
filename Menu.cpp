@@ -46,8 +46,12 @@ void Menu::runChoice(){
 void Menu::credits(){
     cout << endl << "Credits:" << endl;
     cout << "--------" << endl;
-    cout << "Callum Ackland - s3791362" << endl;
-    cout << "Taouit Kiork - []" << endl;
-    cout << "Harrison Burr - []" << endl;
+
+    cout << "1:" << endl << "Name: Callum Ackland" << endl << "Student ID: s3791362" << endl 
+    << "Email: s3791362@student.rmit.edu.au" << endl;
+    cout << endl;
+    cout << "2:" << endl << "Taouit Kiork - []" << endl;
+    cout << endl;
+    cout << "3:" << endl << "Harrison Burr - []" << endl;
     cout << endl;
 }
