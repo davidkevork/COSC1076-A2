@@ -1,10 +1,10 @@
 #include <iostream>
 #include <string>
-#include "Menu.cpp"
 #include <typeinfo>
+#include "Menu.h"
 
 int main(void) {
-    Menu *menu = new Menu();
+    Menu* menu = new Menu();
     menu->runMenu();
 
     return EXIT_SUCCESS;
