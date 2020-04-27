@@ -1,24 +1,38 @@
+#ifndef FACTORY_H
+#define FACTORY_H
+
 #include <vector>
 #include "Tile.h"
 #include "Colours.h"
-
-class Factory: Tile{
+#include "TileContainer.h"
+/**
+ * Factory object for the Azul game.
+ * Factories contain tiles that the players can collect.
+ **/
+class Factory: public TileContainer{
     public:
         Factory();
+        ~Factory();
 
-        bool contains(Tile);
+        //Get pointers to all tiles in the factory.
+        std::vector<Tile*> getAll();
+        //Get pointers to all tiles of a specific colour in the factory.
+        std::vector<Tile*> getAll(Colour colour);
 
-        std::vector<Tile> getAll();
+        //Shifts all tiles from this factory into the specified factory.
+        void moveToFactory(Factory* factory);
 
-        Tile* getFront();
-        Tile* getBack();
-        Tile* getAt(int index);
-
-        Tile* append(Tile* tile);
-        void remove(Tile* tile);
-
+        //Returns the number of tiles in the factory.
         int getSize();
+
+        //Returns true if this->getSize() = 0; 
+        bool isEmpty();
+
+        //Returns a string for displaying what tiles are in the factory.
+        std::string toString();
     private:
-        std::vector<Tile> tiles;
-        
+        //Vector containing pointers to all tiles in the factory.
+        std::vector<Tile*> tiles;
 };
+
+#endif
