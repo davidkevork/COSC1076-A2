@@ -33,3 +33,6 @@
 
 # History
 .history/
+
+#VSCode settings files.
+.vscode/
