@@ -13,4 +13,4 @@ class BoxLid: public TileContainer{
         TileLList tiles;
 };
 
-#endif BOX_LID_H
+#endif // BOX_LID_H

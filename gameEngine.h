@@ -31,4 +31,4 @@ class gameEngine{
         BoxLid boxLid;
 };
 
-#endif GAME_ENGINE_H
+#endif // GAME_ENGINE_H

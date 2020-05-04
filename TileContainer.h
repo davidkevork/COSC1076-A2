@@ -17,4 +17,4 @@ class TileContainer{
         bool append(Tile* tile);
 };
 
-#endif TILE_CONTAINER_H
+#endif // TILE_CONTAINER_H

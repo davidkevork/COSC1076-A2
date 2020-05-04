@@ -9,4 +9,4 @@ class TileBag: public TileContainer{
         std::vector<Tile*> tiles;
 };
 
-#endif TILE_BAG_H
+#endif // TILE_BAG_H
