@@ -35,4 +35,4 @@ class Factory: public TileContainer{
         std::vector<Tile*> tiles;
 };
 
-#endif
+#endif // FACTORY_H

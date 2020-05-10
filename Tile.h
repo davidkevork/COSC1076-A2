@@ -18,4 +18,4 @@ class Tile{
         Colour colour;
 };
 
-#endif
+#endif // TILE_H

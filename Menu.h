@@ -1,5 +1,5 @@
-#ifndef COSC_ASS_TWO_MENU
-#define COSC_ASS_TWO_MENU
+#ifndef MENU_H
+#define MENU_H
 
 #include <iostream>
 #include <string>
@@ -18,4 +18,4 @@ class Menu {
         int choice;
 };
 
-#endif // COSC_ASS_TWO_MENU
+#endif // MENU_H

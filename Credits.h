@@ -1,5 +1,5 @@
-#ifndef COSC_ASS_TWO_CREDITS
-#define COSC_ASS_TWO_CREDITS
+#ifndef CREDITS_H
+#define CREDITS_H
 
 #include <iostream>
 #include <string>
@@ -16,4 +16,4 @@ class Credits {
         std::string id;
 };
 
-#endif // COSC_ASS_TWO_CREDITS
+#endif // CREDITS_H

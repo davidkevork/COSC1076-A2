@@ -13,4 +13,4 @@ typedef char Colour;
 #define BLACK = 'U';
 #define FIRST_PLAYER = 'F'
 
-#endif
+#endif // COLOURS_H

@@ -46,4 +46,4 @@ class Player{
         Tile** PatternLine[5];
 };
 
-#endif PLAYER_H
+#endif // PLAYER_H

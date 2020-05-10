@@ -2,10 +2,12 @@
 #define TILE_LINKED_LIST_H
 
 #include "Tile.h"
+#include "TileNode.h"
+
 /**
  * Linked list containing Azul game tiles.
  **/
-class TileLList{
+class TileLList {
     public:
         TileLList();
         ~TileLList();
@@ -22,8 +24,10 @@ class TileLList{
          * Returns false if the position is larger than the size of the linked list.
          **/
         bool insert(int position, Tile* tile);
-        //Adds a tile to the end of the linked list.
+        // Adds a tile to the end of the linked list.
         void append(Tile* tile);
+        // size of the linked list
+        int size();
         
         /**
          * Removes the tile at the specified position.
@@ -37,19 +41,12 @@ class TileLList{
         Tile* remove(Tile* tile);
 
     private:
-        TileNode* start;
-};
-/**
- * Data structure for nodes in the TileLList.
- * Each node contains a pointer to it's tile
- * and a pointer to the next tile in the linked list.
- **/
-struct TileNode{
-    public:
-        //Pointer to the tile this node references.
-        Tile* self;
-        //Pointer to the next tilenode in the list.
-        TileNode* next;
+        TileNode* head;
+        TileNode* tail;
+        int _size;
+
+        void setSize(int size);
+        void removeTileNode(TileNode* previousNode, TileNode* currentNode);
 };
 
-#endif TILE_LINKED_LIST_H
+#endif // TILE_LINKED_LIST_H
