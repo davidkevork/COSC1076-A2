@@ -22,6 +22,9 @@ class Factory: public TileContainer{
         //Shifts all tiles from this factory into the specified factory.
         void moveToFactory(Factory* factory);
 
+        //Shifts all tiles to a new tileContainer
+        void moveToContainer(TileContainer* container);
+        
         //Returns the number of tiles in the factory.
         int getSize();
 
