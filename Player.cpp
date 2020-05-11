@@ -1,4 +1,3 @@
-
 #include <string>
 #include <vector>
 #include <iostream>
@@ -57,7 +56,6 @@ Player::~Player(){
     }
     delete[] this->TileFloor;
 }
-
 
 bool Player::applyTilesToPattern(int row, std::vector<Tile*> tiles){
     bool result = true;
@@ -123,10 +121,31 @@ bool Player::completeRow(){
 }
 
 void Player::nextRound(){
+    //Clear floor.
     for(int i =0 ; i < FLOOR_SIZE; i++){
         if(this->TileFloor[i]!=nullptr){
-            points+=PointCalculator::FloorTile(i);
+            this->points+=PointCalculator::FloorTile(i);
+            this->boxLid->append(this->TileFloor[i]);
+            this->TileFloor[i] = nullptr;
         }
     }
-    points+=PointCalculator::FinalWall(this->TileWall);
+    //Clear pattern line.
+    for(int row = 0; row < WALL_ROWS; row++){
+        for(int column = 0; column < row+1; column++){
+            if(this->PatternLine[row][column]!=nullptr){
+                this->boxLid->append(this->PatternLine[row][column]);
+                this->PatternLine[row][column] = nullptr;
+            }
+        }
+    }
+}
+
+void Player::completeGame(){
+    this->points+=PointCalculator::FinalWall(this->TileWall);
+    for(int row = 0; row< WALL_ROWS; row++){
+        for(int col = 0; col < WALL_COLUMNS; col++){
+            this->boxLid->append(this->TileWall[row][col]);
+            this->TileWall[row][col] = nullptr;
+        }
+    }
 }
