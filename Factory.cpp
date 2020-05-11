@@ -59,5 +59,40 @@ std::string Factory::toString(){
         }
     }
     return result;
+}
 
+bool Factory::append(Tile* tile){
+    this->tiles.emplace_back(tile);
+    return true;
+}
+
+bool Factory::remove(Tile* tile){
+    bool result = false;
+    for(size_t i = 0; i < this->tiles.size(); i++){
+        if(this->tiles[i]==tile){
+            this->tiles.erase(this->tiles.begin()+i);
+            result = true;
+        }
+    }
+    return result;
+}
+
+bool Factory::contains(Tile* tile){
+    bool result = false;
+    for(Tile* i:this->tiles){
+        if(i==tile){
+            result = true;
+        }
+    }
+    return result;
+}
+
+bool Factory::contains(Colour colour){
+    bool result = false;
+    for(Tile* i:this->tiles){
+        if(i->getColour()==colour){
+            result = true;
+        }
+    }
+    return result;
 }

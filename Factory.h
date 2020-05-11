@@ -33,6 +33,11 @@ class Factory: public TileContainer{
 
         //Returns a string for displaying what tiles are in the factory.
         std::string toString();
+
+        virtual bool append(Tile* tile);
+        virtual bool remove(Tile* tile);
+        virtual bool contains(Tile* tile);
+        virtual bool contains(Colour colour);
     private:
         //Vector containing pointers to all tiles in the factory.
         std::vector<Tile*> tiles;
