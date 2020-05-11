@@ -6,6 +6,12 @@
 
 class TileBag: public TileContainer{
     public:
+        TileBag();
+        ~TileBag();
+
+        std::vector<Tile*> getAll();
+        Tile* getRandomTile();
+
         virtual bool contains(Tile* tile);
         virtual bool contains(Colour colour);
         virtual bool append(Tile* tile);
