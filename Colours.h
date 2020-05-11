@@ -6,8 +6,8 @@
  **/
 typedef char Colour;
 
-#define RED 'R';
-#define YELLOW 'Y';
+#define RED 'R'
+#define YELLOW 'Y'
 #define LBLUE 'B'
 #define DBLUE 'D'
 #define BLACK 'U';
