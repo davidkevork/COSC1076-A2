@@ -8,9 +8,12 @@
  * Tiles are placed here after they are used, before they are placed back into the bag.
  **/
 class BoxLid: public TileContainer{
+    public:
+        BoxLid();
+        ~BoxLid();
     private:
         //Linked list of all tiles in the box.
-        TileLList tiles;
+        TileLList* tiles;
 };
 
 #endif // BOX_LID_H
