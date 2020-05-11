@@ -10,7 +10,7 @@ typedef char Colour;
 #define YELLOW 'Y'
 #define LBLUE 'B'
 #define DBLUE 'D'
-#define BLACK 'U';
+#define BLACK 'U'
 #define FIRST_PLAYER 'F'
 
 #endif // COLOURS_H
