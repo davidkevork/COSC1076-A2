@@ -43,6 +43,9 @@ class Player{
 
         //Returns the total points the player has.
         int getPlayerPoints();
+        
+        //Returns the player's name.
+        std::string getName();
 
     private: 
         //Add a tile to the players floor. Any tiles that don't fit will be placed back in the bag.

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include "gameEngine.h"
 
 class Menu {
     public:
@@ -16,6 +17,7 @@ class Menu {
 
     private:
         int choice;
+        gameEngine* ge;
 };
 
 #endif // MENU_H

@@ -2,6 +2,7 @@
 #define GAME_ENGINE_H
 
 #include <string>
+#include <iostream>
 #include "Factory.h"
 #include "Player.h"
 #include "BoxLid.h"
@@ -19,16 +20,20 @@ class gameEngine{
         void startGame();
         //Resumes a game from a savestate.
         void startGame(std::string saveGame);
+        //Performs round with players in player array.
+        void round();
 
     private:
         //Array containing the games players.
         Player* players[2];
         //Array containing the games factories.
-        Factory* Factories[6];
+        Factory* factories[6];
         //Tilebag containing tiles to be placed on factories in the next round.
-        TileBag tileBag;
+        TileBag* tileBag;
         //BoxLid containing discarded tiles.
-        BoxLid boxLid;
+        BoxLid* boxLid;
+        //Round number
+        int roundno;
 };
 
 #endif // GAME_ENGINE_H
