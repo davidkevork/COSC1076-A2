@@ -15,7 +15,7 @@ Tile* TileLList::getTile(int index) {
         throw std::runtime_error("Index out of range");
     } else {
         TileNode* returnTile = this->head;
-        for (size_t i = 1; i < index; i++) {
+        for (int i = 1; i < index; i++) {
             returnTile = returnTile->getNext();
         }
         return returnTile->getTile();
@@ -36,7 +36,7 @@ bool TileLList::insert(int position, Tile* tile) {
     } else {
         TileNode* previousNode = nullptr;
         TileNode* currentNode = this->head;
-        for (size_t i = 0; i < position; i++) {
+        for (int i = 0; i < position; i++) {
             previousNode = currentNode;
             currentNode = currentNode->getNext();
         }
@@ -77,7 +77,7 @@ Tile* TileLList::remove(int position) {
         Tile* returnTile = nullptr;
         TileNode* previousNode = nullptr;
         TileNode* currentNode = this->head;
-        for (size_t i = 0; i < position - 1; i++) {
+        for (int i = 0; i < position - 1; i++) {
             previousNode = currentNode;
             currentNode = currentNode->getNext();
         }

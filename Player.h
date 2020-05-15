@@ -26,6 +26,7 @@ class Player{
         /**
          * Takes a vector of tiles and tries to place them on a pattern line. Returns false if the move was illegal.
          * This vector may contain the FirstPlayer tile.
+         * TODO: Check if that colour is on the wall already in that row as well as checking the pattern wall colour.
          **/
         bool applyTilesToPattern(int patternLine, vector<Tile*> tiles);
 
@@ -44,6 +45,7 @@ class Player{
         //Returns the total points the player has.
         int getPlayerPoints();
 
+        //Debug method, prints relevant player details to cout.
         void debug_printAll();
 
     private: 
@@ -56,6 +58,7 @@ class Player{
         void moveFloorTilesToBoxLid();
         //Moves all tiles from the wall into the box lid.
         void moveWallTilesToBoxLid();
+
         //Box lid to place tiles into once they are removed from play.
         BoxLid* boxLid;
         //Players name.
@@ -70,6 +73,7 @@ class Player{
         Tile*** PatternLine;
         //Map of all the offsets that each colour uses to determine what coloumn on the mozaic it is on.
         std::map<char, int> colourOffsets;
+
 };
 
 #endif // PLAYER_H
