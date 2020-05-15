@@ -48,6 +48,7 @@ bool TileLList::insert(int position, Tile* tile) {
             previousNode->setNext(newTile);
         }
     }
+    return true;
 }
 
 void TileLList::append(Tile* tile) {

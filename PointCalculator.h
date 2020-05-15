@@ -14,7 +14,7 @@ class PointCalculator{
         static int FinalWall(Tile*** wall);
 
     private:
-        int countConnected(Tile*** wall, int row, int Column, int xMod, int yMod);
+        static int countConnected(Tile*** wall, int row, int Column, int xMod, int yMod);
 };
 
 #endif //POINT_CALC_H

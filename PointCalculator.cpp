@@ -1,9 +1,10 @@
 #include "Tile.h"
 #include "BoardDefinitions.h"
+#include "PointCalculator.h"
 #include <map>
 #include <vector>
 
-static int FloorTile(int position){
+int PointCalculator::FloorTile(int position){
     int result = 0;
     if(position <= 1){
         result = -1;
@@ -15,7 +16,29 @@ static int FloorTile(int position){
     return result;
 }
 
-static int WallPlacment(Tile*** wall, int tileRow, int tileColumn){
+int PointCalculator::countConnected(Tile*** wall, int row, int column, int rowMod, int colMod){
+    bool valid = true;
+    int result = 0;
+    if(row+rowMod < 0 || column+colMod < 0){
+        //Coord out of bounds.
+        valid = false;
+    }
+    if(row+rowMod >= WALL_ROWS || column+colMod >= WALL_COLUMNS){
+        //Coord out of bounds.
+        valid = false;
+    }
+    if(valid){
+        if(wall[row][column]!=nullptr){
+            //Check for any times connected in the same direction.
+            result+=countConnected(wall, row+rowMod, column+colMod, rowMod, colMod);
+            //Add 1 for this tile.
+            result+=1;
+        }
+    }
+    return result;
+}
+
+int PointCalculator::WallPlacment(Tile*** wall, int tileRow, int tileColumn){
 
     int hPoints = 0;
     int vPoints = 0;
@@ -41,29 +64,7 @@ static int WallPlacment(Tile*** wall, int tileRow, int tileColumn){
     return totalPoints;
 }
 
-int countConnected(Tile*** wall, int row, int column, int rowMod, int colMod){
-    bool valid = true;
-    int result = 0;
-    if(row+rowMod < 0 || column+colMod < 0){
-        //Coord out of bounds.
-        valid = false;
-    }
-    if(row+rowMod >= WALL_ROWS || column+colMod >= WALL_COLUMNS){
-        //Coord out of bounds.
-        valid = false;
-    }
-    if(valid){
-        if(wall[row][column]!=nullptr){
-            //Check for any times connected in the same direction.
-            result+=countConnected(wall, row+rowMod, column+colMod, rowMod, colMod);
-            //Add 1 for this tile.
-            result+=1;
-        }
-    }
-    return result;
-}
-
-static int FinalWall(Tile*** wall){
+int PointCalculator::FinalWall(Tile*** wall){
     int points = 0;
     //Count full rows.
     for(int row = 0; row < WALL_ROWS; row++){
@@ -92,7 +93,7 @@ static int FinalWall(Tile*** wall){
 
     for(int row = 0; row < WALL_ROWS; row++){
         for(int column = 0; column < WALL_COLUMNS; column++){
-            colourCounts[wall[row][column]->getColour()]+=1
+            colourCounts[wall[row][column]->getColour()]+=1;
         }
     }    
 
@@ -102,6 +103,5 @@ static int FinalWall(Tile*** wall){
         }
     }
 
-    return points.
-
+    return points;
 }
