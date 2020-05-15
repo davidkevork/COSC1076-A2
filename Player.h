@@ -44,6 +44,9 @@ class Player{
 
         //Returns the total points the player has.
         int getPlayerPoints();
+        
+        //Returns the player's name.
+        std::string getName();
 
         //Debug method, prints relevant player details to cout.
         void debug_printAll();

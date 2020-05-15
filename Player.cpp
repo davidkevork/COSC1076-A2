@@ -232,3 +232,7 @@ void Player::debug_printAll(){
     }
 
 }
+
+std::string Player::getName() {
+    return this->name;
+}

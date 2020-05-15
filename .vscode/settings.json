@@ -51,6 +51,7 @@
     "typeindex": "cpp",
     "typeinfo": "cpp",
     "random": "cpp",
+    "string": "cpp"
     "map": "cpp",
     "concepts": "cpp",
     "ios": "cpp",

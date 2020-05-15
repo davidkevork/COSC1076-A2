@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Menu.h"
 #include "Credits.h"
+#include "gameEngine.h"
 
 using std::cout;
 using std::cin;
@@ -10,6 +11,7 @@ Menu::Menu() {
     cout << "Welcome to Azul!" << endl;
     cout << "----------------" << endl;
     cout << endl;
+    this->ge = new gameEngine();
 }
 
 Menu::~Menu() {}
@@ -37,11 +39,23 @@ void Menu::printMenu() {
 
 void Menu::runChoice() {
     if(choice == 1) {
-        cout << "running option 1" << endl;
+        cout << endl<< "Starting a New Game" << endl << endl;
+        this->ge->startGame();
     } else if(choice == 2) {
-        cout << "running option 2" << endl;
+        cout << endl<< "Enter File:" << endl << endl;
+        std::string saveGame = "";
+        cin >> saveGame;
+        this->ge->startGame(saveGame);
     } else if(choice == 3) {
         this->credits();
+    } else if(choice == 4){
+        cout << "Goodbye!" << endl;
+        this->choice = 4;
+    } else if(cin.eof()) {
+        cout << "Goodbye!" << endl;
+        this->choice = 4;
+    }else {
+        cout << "Invalid Input" << endl;
     }
 }
 
