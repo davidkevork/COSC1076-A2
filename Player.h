@@ -5,6 +5,7 @@
 #include <array>
 #include <vector>
 #include "BoxLid.h"
+#include <map>
 using std::array;
 using std::vector;
 
@@ -47,9 +48,20 @@ class Player{
         //Returns the player's name.
         std::string getName();
 
+        //Debug method, prints relevant player details to cout.
+        void debug_printAll();
+
     private: 
         //Add a tile to the players floor. Any tiles that don't fit will be placed back in the bag.
         void addTileToFloor(Tile* tile);
+
+        //Moves tiles left in this pattern line into the box lid.
+        void movePatternTilesToBoxLid(int patternLine);
+        //Moves all tiles from the floor into the box lid.
+        void moveFloorTilesToBoxLid();
+        //Moves all tiles from the wall into the box lid.
+        void moveWallTilesToBoxLid();
+
         //Box lid to place tiles into once they are removed from play.
         BoxLid* boxLid;
         //Players name.
@@ -62,6 +74,9 @@ class Player{
         Tile*** TileWall;
         //Array of Pattern line arrays of tile pointers..
         Tile*** PatternLine;
+        //Map of all the offsets that each colour uses to determine what coloumn on the mozaic it is on.
+        std::map<char, int> colourOffsets;
+
 };
 
 #endif // PLAYER_H

@@ -6,6 +6,7 @@
 
 class TileContainer{
     public:
+        //We need a deconstructor otherwise g++ won't compile.
         virtual ~TileContainer(){};
         //Returns true if the tile container contains this specific tile.
         virtual bool contains(Tile* tile) = 0;
