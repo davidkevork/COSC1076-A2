@@ -1,0 +1,54 @@
+// game state data
+f // factory 0 centre table + first player token
+R Y B L// factory 1
+B B B R// factory 2
+U Y Y L// factory 3
+R U R B// factory 4
+L L U Y// factory 5
+
+R R Y B U U L R Y B // Tile Bag
+// Box Lid
+
+// player 1 save data
+playerName1
+true // refers that its not their turn
+0 // player score
+
+// Player Patterns
+.
+..
+...
+....
+.....
+
+// Player Mosaic/GameBoard
+. . . . .
+. . . . .
+. . . . .
+. . . . .
+. . . . .
+
+// Broken tiles + first player token
+. . . . . . .
+
+// player 2 save data
+
+// refers that it is their turn
+// player score
+
+// Player Patters
+.
+..
+...
+....
+.....
+
+// Player Mosaic/GameBoard
+. . . . .
+. . . . .
+. . . . .
+. . . . .
+. . . . .
+
+// Broken tiles + first player token
+. . . . . . .
