@@ -34,6 +34,10 @@ class gameEngine{
         BoxLid* boxLid;
         //Round number
         int roundno;
+        //Returns true if any of the players have won the game, otherwise false.
+        bool checkGameFinsihed();
+        //Returns true if each factory is empty, otherwise false.
+        bool checkFactoriesEmpty();
 };
 
 #endif // GAME_ENGINE_H

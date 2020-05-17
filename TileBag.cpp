@@ -54,5 +54,9 @@ bool TileBag::contains(Colour colour){
 }
 
 Tile* TileBag::getRandomTile(){
-    return this->tiles.at(rand() % this->tiles.size());
+    Tile* result = nullptr;
+    if(this->tiles.size()!=0){
+        result = this->tiles.at(rand() % this->tiles.size());
+    }
+    return result;
 }

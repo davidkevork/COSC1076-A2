@@ -55,14 +55,14 @@ std::string Factory::toString(){
     } else {
         result+=this->tiles[0]->getColour();
         for(size_t i = 1; i < this->tiles.size(); i++){
-            result+=" "+this->tiles[i]->getColour();
+            result = result + ' ' + this->tiles[i]->getColour();
         }
     }
     return result;
 }
 
 bool Factory::append(Tile* tile){
-    this->tiles.emplace_back(tile);
+    this->tiles.push_back(tile);
     return true;
 }
 
