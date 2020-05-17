@@ -8,6 +8,8 @@
 #include "BoxLid.h"
 #include "TileBag.h"
 
+using std::string;
+
 
 /**
  * Azul game engine.
@@ -40,10 +42,13 @@ class GameEngine{
         //Round number
         int roundno;
 
-        int GameType(std::string line);
+        int GameType(string line);
         void loadFactories(string factories, int pos);
+        void loadTileBag(string line);
+        void loadBoxLid(string line);
 
         vector<string> split(const string splitString, char delimiter);
+        string replaceAll(string line, string replace);
 };
 
 #endif // GAME_ENGINE_H

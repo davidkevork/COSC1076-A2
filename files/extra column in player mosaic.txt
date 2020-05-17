@@ -6,7 +6,7 @@ U Y L L
 R Y R B
 L L U Y
 
-R R Y B U U L R Y B // Tile Bag
+R R Y B U U L R Y B// Tile Bag
 R L U U B R B B// Box Lid
 
 // player 1 save data

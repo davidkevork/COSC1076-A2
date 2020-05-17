@@ -79,20 +79,59 @@ void GameEngine::loadGame() {
             if (gameType == 1) {
                 std::getline(saveFile, line);
                 this->loadFactories(line, 0);
+                std::getline(saveFile, line);
+                this->loadFactories(line, 1);
+                std::getline(saveFile, line);
+                this->loadFactories(line, 2);
+                std::getline(saveFile, line);
+                this->loadFactories(line, 3);
+                std::getline(saveFile, line);
+                this->loadFactories(line, 4);
+                std::getline(saveFile, line);
+                this->loadFactories(line, 5);
+            } else if (gameType == 2) {
+                this->loadTileBag(line);
+            } else if (gameType == 3) {
+                this->loadBoxLid(line);
             }
         }
     }
 }
 
-vector<string> split(const string splitString, char delimiter) {
+vector<string> GameEngine::split(const string splitString, char delimiter) {
     vector<string> out;
     std::stringstream stringStream (splitString);
     string item;
     while (getline(stringStream, item, delimiter)) {
-        out.push_back (item);
+        out.push_back(item);
     }
     return out;
 }
+
+string GameEngine::replaceAll(string line, string replace) {
+    string data = line;
+	int pos = data.find(replace);
+	while(pos != string::npos) {
+		data.replace(pos, replace.size(), "");
+		pos = data.find(replace, pos);
+	}
+    return data;
+}
+
+void GameEngine::loadTileBag(string line) {
+    vector<string> tileBagString = this->split(this->replaceAll(line, "// Tile Bag"), ' ');
+    for (string colour : tileBagString) {
+        (*this->tileBag).append(new Tile(colour));
+    }
+}
+
+void GameEngine::loadBoxLid(string line) {
+    vector<string> boxLidString = this->split(this->replaceAll(line, "// Box Lid"), ' ');
+    for (string colour : boxLidString) {
+        (*this->boxLid).append(new Tile(colour));
+    }
+}
+
 
 void GameEngine::loadFactories(string factories, int pos) {
     vector<string> splitString = this->split(factories, ' ');

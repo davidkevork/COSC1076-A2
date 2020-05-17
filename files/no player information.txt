@@ -6,7 +6,7 @@ U Y Y L
 R U R B
 L L U Y
 
-R R Y B U U L R Y B // Tile Bag
+R R Y B U U L R Y B// Tile Bag
 // Box Lid
 
 // player 1 save data
@@ -33,7 +33,7 @@ R R Y B U U L R Y B // Tile Bag
 
 // player 2 save data
 
-// refers that it is their turn
+
 
 
 // Player 2 Patterns

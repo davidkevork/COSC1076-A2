@@ -6,12 +6,12 @@ s s s s
 s s s s
 s s s s
 
-r r b y b y g // Tile Bag
+r r b y b y g// Tile Bag
 r r b y b y g // Box Lid
 
 // player 1 save data
 playerName1
-false // refers that its not their turn
+false
 10 
 
 // Player 1 Patterns
@@ -33,7 +33,7 @@ r r b y b y g
 
 // player 2 save data
 playerName2
-true // refers that it is their turn
+true
 20 
 
 // Player 2 Patterns
