@@ -1,10 +1,10 @@
 // game state data
-f // factory 0 centre table + first player token
-s s s s// factory 1
-s s s s// factory 2
-s s s s// factory 3
-s s s s// factory 4
-s s s s// factory 5
+f
+s s s s
+s s s s
+s s s s
+s s s s
+s s s s
 
 r r b y b y g // Tile Bag
 r r b y b y g // Box Lid
@@ -12,16 +12,16 @@ r r b y b y g // Box Lid
 // player 1 save data
 playerName1
 false // refers that its not their turn
-10 // player score
+10 
 
-// Player Patterns
+// Player 1 Patterns
 r
 yy
 ...
 bbb.
 .....
 
-// Player Mosaic/GameBoard
+// Player 1 Mosaic/GameBoard
 . r . y .
 . r . y .
 . r . y .
@@ -34,16 +34,16 @@ r r b y b y g
 // player 2 save data
 playerName2
 true // refers that it is their turn
-20 // player score
+20 
 
-// Player Patters
+// Player 2 Patterns
 r
 yy
 ...
 bbb.
 .....
 
-// Player Mosaic/GameBoard
+// Player 2 Mosaic/GameBoard
 . r . y .
 . r . y .
 . r . y .
