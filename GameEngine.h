@@ -13,15 +13,20 @@
  * Azul game engine.
  * Contains the internal game logic.
  **/
-class gameEngine{
+class GameEngine{
     public:
-        gameEngine();
+        GameEngine();
         //Starts a fresh game.
         void startGame();
         //Resumes a game from a savestate.
         void startGame(std::string saveGame);
         //Performs round with players in player array.
         void round();
+
+        //Save Game
+        void saveGame();
+        //Load Game
+        void loadGame();
 
     private:
         //Array containing the games players.
@@ -34,6 +39,11 @@ class gameEngine{
         BoxLid* boxLid;
         //Round number
         int roundno;
+
+        int GameType(std::string line);
+        void loadFactories(string factories, int pos);
+
+        vector<string> split(const string splitString, char delimiter);
 };
 
 #endif // GAME_ENGINE_H

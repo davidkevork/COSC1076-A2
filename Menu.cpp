@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Menu.h"
 #include "Credits.h"
-#include "gameEngine.h"
+#include "GameEngine.h"
 
 using std::cout;
 using std::cin;
@@ -11,7 +11,7 @@ Menu::Menu() {
     cout << "Welcome to Azul!" << endl;
     cout << "----------------" << endl;
     cout << endl;
-    this->ge = new gameEngine();
+    this->ge = new GameEngine();
 }
 
 Menu::~Menu() {}
