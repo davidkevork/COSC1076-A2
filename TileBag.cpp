@@ -2,6 +2,8 @@
 
 TileBag::TileBag(){
 
+    srand((unsigned)time_t(NULL));
+
 }
 
 TileBag::~TileBag(){
@@ -16,7 +18,7 @@ std::vector<Tile*> TileBag::getAll(){
 }
 
 bool TileBag::append(Tile* tile){
-    this->tiles.emplace_back(tile);
+    this->tiles.push_back(tile);
     return true;
 }
 
@@ -49,4 +51,8 @@ bool TileBag::contains(Colour colour){
         }
     }
     return result;
+}
+
+Tile* TileBag::getRandomTile(){
+    return this->tiles.at(rand() % this->tiles.size());
 }
