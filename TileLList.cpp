@@ -122,3 +122,15 @@ void TileLList::removeTileNode(TileNode* previousNode, TileNode* currentNode)
     }
     delete currentNode;
 }
+
+std::string TileLList::toString() {
+    std::string out = "";
+    TileNode* currentTile = this->head;
+    for (int i = 1; i < this->_size; i++) {
+        out.append(currentTile->getTile()->getColourString());
+        out.append(" ");
+        currentTile = currentTile->getNext();
+    }
+    out.pop_back();
+    return out;
+}

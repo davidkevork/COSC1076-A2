@@ -44,6 +44,9 @@ class Player{
 
         //Returns the total points the player has.
         int getPlayerPoints();
+
+        //Sets player points
+        void setPlayerPoints(int points);
         
         //Returns the player's name.
         std::string getName();

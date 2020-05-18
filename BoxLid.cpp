@@ -41,3 +41,7 @@ bool BoxLid::contains(Colour colour){
     }
     return result;
 }
+
+std::string BoxLid::toString() {
+    return this->tiles->toString();
+}

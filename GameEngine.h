@@ -8,20 +8,27 @@
 #include "BoxLid.h"
 #include "TileBag.h"
 
+using std::string;
+
 
 /**
  * Azul game engine.
  * Contains the internal game logic.
  **/
-class gameEngine{
+class GameEngine{
     public:
-        gameEngine();
+        GameEngine();
         //Starts a fresh game.
         void startGame();
         //Resumes a game from a savestate.
         void startGame(std::string saveGame);
         //Performs round with players in player array.
         void round();
+
+        //Save Game
+        void saveGame(string fileName);
+        //Load Game
+        void loadGame(string fileName);
 
     private:
         //Array containing the games players.
@@ -34,6 +41,15 @@ class gameEngine{
         BoxLid* boxLid;
         //Round number
         int roundno;
+
+        int GameType(string line);
+        void loadFactories(string factories, int pos);
+        void loadTileBag(string line);
+        void loadBoxLid(string line);
+        void loadPlayer(string name, string points, int pos);
+
+        vector<string> split(const string splitString, char delimiter);
+        string replaceAll(string line, string replace);
 };
 
 #endif // GAME_ENGINE_H

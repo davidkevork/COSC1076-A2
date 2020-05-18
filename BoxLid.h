@@ -18,6 +18,8 @@ class BoxLid: public TileContainer{
         bool remove(Tile* tile);
         bool contains(Tile* tile);
         bool contains(Colour colour);
+
+        std::string toString();
     private:
         //Linked list of all tiles in the box.
         TileLList* tiles;

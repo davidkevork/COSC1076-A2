@@ -16,6 +16,8 @@ class TileBag: public TileContainer{
         virtual bool contains(Colour colour);
         virtual bool append(Tile* tile);
         virtual bool remove(Tile* tile);
+
+        std::string TileBag::toString();
     private:
         std::vector<Tile*> tiles;
 };

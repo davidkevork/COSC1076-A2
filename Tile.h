@@ -11,9 +11,11 @@
 class Tile{
     public:
         Tile(Colour colour);
+        Tile(std::string colour);
         ~Tile();
 
         Colour getColour();
+        std::string getColourString();
     private:
         Colour colour;
 };
