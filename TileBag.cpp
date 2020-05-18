@@ -50,3 +50,13 @@ bool TileBag::contains(Colour colour){
     }
     return result;
 }
+
+std::string TileBag::toString() {
+    std::string out = "";
+    for (Tile* t : this->getAll()) {
+        out.append(t->getColourString());
+        out.append(" ");
+    }
+    out.pop_back();
+    return out;
+}

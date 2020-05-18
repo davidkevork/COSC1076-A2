@@ -1,11 +1,11 @@
 // game state data
-f
-R Y B L
-B B L R
-U Y L L
-R Y R B
-L L U Y
-L R U Y
+F// factory 0 centre table + first player token
+R Y B L// factory 1
+B B L R// factory 2
+U Y L L// factory 3
+R Y R B// factory 4
+L L U Y// factory 5
+L R U Y// factory 6
 
 R R Y B U U L R Y B// Tile Bag
 // Box Lid

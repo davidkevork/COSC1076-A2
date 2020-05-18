@@ -27,3 +27,22 @@ Tile::~Tile(){}
 Colour Tile::getColour(){
     return this->colour;
 }
+
+std::string Tile::getColourString() {
+    std::string colour = "";
+    if (this->colour == RED) {
+        colour = "R";
+    } else if (this->colour == YELLOW) {
+        colour = "Y";
+    } else if (this->colour == LBLUE) {
+        colour = "B";
+    } else if (this->colour == DBLUE) {
+        colour = "D";
+    } else if (this->colour == BLACK) {
+        colour = "U";
+    } else if (this->colour == FIRST_PLAYER) {
+        colour = "f";
+    } else {
+        colour = "s";
+    }
+}

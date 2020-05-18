@@ -157,6 +157,10 @@ int Player::getPlayerPoints(){
     return this->points;
 }
 
+void Player::setPlayerPoints(int points) {
+    this->points = points;
+}
+
 bool Player::transferTileOntoWall(int patternLine){
     bool result = true;
     //Check that pattern line is full.

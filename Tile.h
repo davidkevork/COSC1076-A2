@@ -15,6 +15,7 @@ class Tile{
         ~Tile();
 
         Colour getColour();
+        std::string getColourString();
     private:
         Colour colour;
 };

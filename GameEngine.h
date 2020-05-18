@@ -26,9 +26,9 @@ class GameEngine{
         void round();
 
         //Save Game
-        void saveGame();
+        void saveGame(string fileName);
         //Load Game
-        void loadGame();
+        void loadGame(string fileName);
 
     private:
         //Array containing the games players.
@@ -46,6 +46,7 @@ class GameEngine{
         void loadFactories(string factories, int pos);
         void loadTileBag(string line);
         void loadBoxLid(string line);
+        void loadPlayer(string name, string points, int pos);
 
         vector<string> split(const string splitString, char delimiter);
         string replaceAll(string line, string replace);

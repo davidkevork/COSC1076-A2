@@ -40,6 +40,8 @@ class TileLList {
          **/
         Tile* remove(Tile* tile);
 
+        std::string toString();
+
     private:
         TileNode* head;
         TileNode* tail;
