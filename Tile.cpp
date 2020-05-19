@@ -45,4 +45,5 @@ std::string Tile::getColourString() {
     } else {
         colour = "s";
     }
+    return colour;
 }

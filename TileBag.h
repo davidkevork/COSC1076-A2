@@ -17,7 +17,7 @@ class TileBag: public TileContainer{
         virtual bool append(Tile* tile);
         virtual bool remove(Tile* tile);
 
-        std::string TileBag::toString();
+        std::string toString();
     private:
         std::vector<Tile*> tiles;
 };

@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "BoxLid.h"
 #include "TileBag.h"
+#include "BoardDefinitions.h"
 
 using std::string;
 
@@ -41,7 +42,6 @@ class GameEngine{
         BoxLid* boxLid;
         //Round number
         int roundno;
-<<<<<<< HEAD:GameEngine.h
 
         int GameType(string line);
         void loadFactories(string factories, int pos);
@@ -51,7 +51,6 @@ class GameEngine{
 
         vector<string> split(const string splitString, char delimiter);
         string replaceAll(string line, string replace);
-=======
         //Returns true if any of the players have won the game, otherwise false.
         bool checkGameFinsihed();
         //Returns true if each factory is empty, otherwise false.
@@ -64,7 +63,6 @@ class GameEngine{
         std::vector<std::string> getPlayerTurnCommand();
 
         bool quitGameFlag;
->>>>>>> gameEngineWork:gameEngine.h
 };
 
 

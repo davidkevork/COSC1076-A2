@@ -6,6 +6,4 @@
 #define FLOOR_SIZE      100
 //Pattern line values are derived from wall sizes.
 
-
-
 #endif //BOARD_DEF_H
