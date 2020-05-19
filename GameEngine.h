@@ -23,7 +23,7 @@ class GameEngine{
         //Resumes a game from a savestate.
         void startGame(std::string saveGame);
         //Performs round with players in player array.
-        void round();
+        void round(int startingPlayer);
 
         //Save Game
         void saveGame(string fileName);
@@ -41,6 +41,7 @@ class GameEngine{
         BoxLid* boxLid;
         //Round number
         int roundno;
+<<<<<<< HEAD:GameEngine.h
 
         int GameType(string line);
         void loadFactories(string factories, int pos);
@@ -50,6 +51,21 @@ class GameEngine{
 
         vector<string> split(const string splitString, char delimiter);
         string replaceAll(string line, string replace);
+=======
+        //Returns true if any of the players have won the game, otherwise false.
+        bool checkGameFinsihed();
+        //Returns true if each factory is empty, otherwise false.
+        bool checkFactoriesEmpty();
+        //Removes the first player token from the tilebag and boxlid, and places it into the center factory.
+        void resetFirstPlayerToken();
+        //Pointer to the first player token.
+        Tile* firstPlayerToken;
+
+        std::vector<std::string> getPlayerTurnCommand();
+
+        bool quitGameFlag;
+>>>>>>> gameEngineWork:gameEngine.h
 };
+
 
 #endif // GAME_ENGINE_H

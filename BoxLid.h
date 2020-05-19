@@ -20,6 +20,7 @@ class BoxLid: public TileContainer{
         bool contains(Colour colour);
 
         std::string toString();
+        void moveAllToContainer(TileContainer* container);
     private:
         //Linked list of all tiles in the box.
         TileLList* tiles;

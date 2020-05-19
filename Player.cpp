@@ -25,7 +25,7 @@ Player::Player(std::string name, BoxLid* boxLid){
             this->TileWall[row][column] = nullptr;
         }
     }
-    this->TileFloor = new Tile*[7];
+    this->TileFloor = new Tile*[FLOOR_SIZE];
     for(int i = 0; i < FLOOR_SIZE; i++){
         this->TileFloor[i] = nullptr;
     }
@@ -65,6 +65,10 @@ Player::~Player(){
     delete[] this->TileFloor;
 }
 
+int Player::getScore(){
+    return this->points;
+}
+
 bool Player::applyTilesToPattern(int row, std::vector<Tile*> tiles){
     bool result = true;
     int rowSpace= row+1;
@@ -74,15 +78,36 @@ bool Player::applyTilesToPattern(int row, std::vector<Tile*> tiles){
         }
     }
     if(this->PatternLine[row][0]!=nullptr){
-        if(tiles.at(0)->getColour()==this->PatternLine[row][0]->getColour()){
+        if(tiles.at(0)->getColour()!=this->PatternLine[row][0]->getColour()){
             result = false;
         }
+        //Check that the colour spot on the wall is free.
     }
+    //Check if the space on the wall this tile will occupy is free.
+    if(tiles.back()->getColour()!=FIRST_PLAYER){
+        int wallColumn = (row+this->colourOffsets[tiles.back()->getColour()])%5;
+        if(this->TileWall[row][wallColumn]!=nullptr){
+            result = false;
+        }
+    } else if(tiles.front()->getColour()!=FIRST_PLAYER){
+        int wallColumn = (row+this->colourOffsets[tiles.front()->getColour()])%5;
+        if(this->TileWall[row][wallColumn]!=nullptr){
+            result = false;
+        }
+    } else{
+        //This will only happen if the only tile you try and pick up is a FIRST_PLAYER token.
+        result = false;
+    }   
     if(result){
         for(int i = 0; i < row+1; i++){
-            if(this->PatternLine[row][i]==nullptr){
-                this->PatternLine[row][i]=tiles.back();
-                tiles.pop_back();
+            if(this->PatternLine[row][i]==nullptr && tiles.size()!=0){
+                if(tiles.back()->getColour()==FIRST_PLAYER){
+                    this->addTileToFloor(tiles.back());
+                    tiles.pop_back();
+                } else{
+                    this->PatternLine[row][i]=tiles.back();
+                    tiles.pop_back();
+                }
             }
         }
         for(Tile* tile:tiles){
@@ -162,6 +187,7 @@ void Player::setPlayerPoints(int points) {
 }
 
 bool Player::transferTileOntoWall(int patternLine){
+    int wallColumn = 0;
     bool result = true;
     //Check that pattern line is full.
     for(int col = 0; col < patternLine+1; col++){
@@ -169,11 +195,13 @@ bool Player::transferTileOntoWall(int patternLine){
             result=false;
         }
     }
-    Tile* tileToMove = this->PatternLine[patternLine][0];
-    int wallColumn = (patternLine+this->colourOffsets[tileToMove->getColour()])%5;
     //Check that the colour spot on the wall is free.
-    if(this->TileWall[patternLine][wallColumn]!=nullptr){
-        result = false;
+    if(result){
+        Tile* tileToMove = this->PatternLine[patternLine][0];
+        wallColumn = (patternLine+this->colourOffsets[tileToMove->getColour()])%5;
+        if(this->TileWall[patternLine][wallColumn]!=nullptr){
+            result = false;
+        }
     }
     //Place tile on wall.
     if(result){
@@ -182,6 +210,8 @@ bool Player::transferTileOntoWall(int patternLine){
         //Shift any remaining tiles into the boxlid
         this->movePatternTilesToBoxLid(patternLine);
     }
+    //Add points for the placement.
+    this->points+=PointCalculator::WallPlacment(this->TileWall, patternLine, wallColumn);
     return result;
 }
 
@@ -214,29 +244,44 @@ void Player::moveWallTilesToBoxLid(){
     }
 }
 
-void Player::debug_printAll(){
-    std::cout<<"Points:"<<this->points<<std::endl;
-    std::cout<<"Wall"<<std::endl;
-    for(int row = 0; row < WALL_ROWS; row++){
-        for(int col = 0; col < WALL_COLUMNS; col++){
-            std::cout<<this->TileWall[row][col] << ". ";
-        }
-        std::cout<<std::endl;
-    }
-    std::cout<<"Pattern Lines"<<std::endl;
-    for(int row = 0; row < WALL_ROWS; row++){
-        for(int col = 0; col <(row+1); col++){
-            std::cout<<this->PatternLine[row][col] << ". ";
-        }
-        std::cout<<std::endl;
-    }
-    std::cout<<"Floor"<<std::endl;
-    for(int i = 0; i < FLOOR_SIZE; i++){
-        std::cout<<this->TileFloor[i]<<". ";
-    }
-
-}
-
 std::string Player::getName() {
     return this->name;
+}
+
+std::string Player::toString(int row){
+    std::string result = "";
+    //Add negative space.
+    for(int i = 0; i < (4-row); i++){
+        result = result+"  ";
+    }
+    //Add pattern lines.
+    for(int col = row; col >= 0; col--){
+        if(this->PatternLine[row][col]!=nullptr){
+            result = result+this->PatternLine[row][col]->getColour() + " ";
+        } else {
+            result = result+". ";
+        }
+        
+    }
+    //Add spacer.
+    result = result+"|| ";
+    //Add tile wall.
+    for(int col = 0; col < WALL_COLUMNS; col++){
+        if(this->TileWall[row][col]!=nullptr){
+            result = result+this->TileWall[row][col]->getColour() + " ";
+        } else {
+            result = result+". ";
+        }
+    }
+    return result;
+}
+
+std::string Player::floorToString(){
+    std::string result = "";
+    for(int i = 0; i < FLOOR_SIZE; i++){
+        if(this->TileFloor[i]!=nullptr){
+            result = result + this->TileFloor[i]->getColour() + " ";
+        }
+    }
+    return result;
 }

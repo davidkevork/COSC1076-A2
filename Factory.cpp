@@ -20,14 +20,17 @@ std::vector<Tile*> Factory::getAll(Colour colour){
     std::vector<Tile*> result;
     for(Tile* tile:this->tiles){
         if(tile->getColour()==colour){
-            result.emplace_back(tile);
+            result.push_back(tile);
+        }
+        if(tile->getColour()==FIRST_PLAYER){
+            result.push_back(tile);
         }
     }
     return result;
 }
 
 void Factory::moveToFactory(Factory* factory){
-    while(!this->isEmpty()){
+    while(!this->isEmpty() && this != factory){
         factory->append(this->tiles[0]);
         this->tiles.erase(this->tiles.begin());
     }
@@ -55,14 +58,14 @@ std::string Factory::toString(){
     } else {
         result+=this->tiles[0]->getColour();
         for(size_t i = 1; i < this->tiles.size(); i++){
-            result+=" "+this->tiles[i]->getColour();
+            result = result + ' ' + this->tiles[i]->getColour();
         }
     }
     return result;
 }
 
 bool Factory::append(Tile* tile){
-    this->tiles.emplace_back(tile);
+    this->tiles.push_back(tile);
     return true;
 }
 

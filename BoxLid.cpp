@@ -45,3 +45,10 @@ bool BoxLid::contains(Colour colour){
 std::string BoxLid::toString() {
     return this->tiles->toString();
 }
+void BoxLid::moveAllToContainer(TileContainer* container){
+    while(this->tiles->size() > 0){
+        Tile* target = this->tiles->getFirst();
+        container->append(target);
+        this->tiles->remove(target);
+    }
+}
