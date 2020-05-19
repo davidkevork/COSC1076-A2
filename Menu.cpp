@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "Menu.h"
 #include "Credits.h"
 #include "gameEngine.h"
@@ -22,7 +23,11 @@ void Menu::runMenu() {
     while(this->choice != 4) {
         this->printMenu();
         cout << "> ";
-        cin >> this->choice;
+        cin>>this->choice;
+        //Removes the trailing \n from cin.
+        std::string catcher;
+        std::getline(cin, catcher);
+        
         this->runChoice();
     }
 }

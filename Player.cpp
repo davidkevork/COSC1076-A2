@@ -236,3 +236,23 @@ void Player::debug_printAll(){
 std::string Player::getName() {
     return this->name;
 }
+
+std::string Player::toString(){
+    std::string result = "";
+    for(int row = 0; row < WALL_ROWS; row++){
+        //Add negative space.
+        for(int i = 0; i < (4-row); i++){
+            result = result+"  ";
+        }
+        //Add pattern lines.
+        for(int col = row+1; col >= 0; col--){
+            result = result+this->PatternLine[row][col]->getColour() + " ";
+        }
+        //Add spacer.
+        result = result+":";
+        //Add tile wall.
+        for(int col = 0; col < WALL_COLUMNS; col++){
+            result = result + this->TileWall[row][col]->getColour() + " ";
+        }
+    }
+}
