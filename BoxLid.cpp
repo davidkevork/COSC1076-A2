@@ -41,3 +41,11 @@ bool BoxLid::contains(Colour colour){
     }
     return result;
 }
+
+void BoxLid::moveAllToContainer(TileContainer* container){
+    while(this->tiles->size() > 0){
+        Tile* target = this->tiles->getFirst();
+        container->append(target);
+        this->tiles->remove(target);
+    }
+}

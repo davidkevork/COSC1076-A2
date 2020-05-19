@@ -28,7 +28,7 @@ int PointCalculator::countConnected(Tile*** wall, int row, int column, int rowMo
         valid = false;
     }
     if(valid){
-        if(wall[row][column]!=nullptr){
+        if(wall[row+rowMod][column+colMod]!=nullptr){
             //Check for any times connected in the same direction.
             result+=countConnected(wall, row+rowMod, column+colMod, rowMod, colMod);
             //Add 1 for this tile.
@@ -43,13 +43,13 @@ int PointCalculator::WallPlacment(Tile*** wall, int tileRow, int tileColumn){
     int hPoints = 0;
     int vPoints = 0;
     //Count above.
-    vPoints+= countConnected(wall, tileRow+1, tileColumn, +1, 0);
+    vPoints+= countConnected(wall, tileRow, tileColumn, +1, 0);
     //Count below.
-    vPoints+= countConnected(wall, tileRow-1 ,tileColumn, -1, 0);
+    vPoints+= countConnected(wall, tileRow ,tileColumn, -1, 0);
     //Count left.
-    hPoints+= countConnected(wall, tileRow, tileColumn-1, 0, -1);
+    hPoints+= countConnected(wall, tileRow, tileColumn, 0, -1);
     //Count right.
-    hPoints+= countConnected(wall, tileRow, tileColumn+1, 0, +1);
+    hPoints+= countConnected(wall, tileRow, tileColumn, 0, +1);
 
     if(hPoints!=0){
         hPoints++;
@@ -93,7 +93,9 @@ int PointCalculator::FinalWall(Tile*** wall){
 
     for(int row = 0; row < WALL_ROWS; row++){
         for(int column = 0; column < WALL_COLUMNS; column++){
-            colourCounts[wall[row][column]->getColour()]+=1;
+            if(wall[row][column]!=nullptr){
+                colourCounts[wall[row][column]->getColour()]+=1;
+            }
         }
     }    
 

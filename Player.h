@@ -17,6 +17,8 @@ class Player{
         void nextRound();
         //Calculates final points total for the game and applies it to the players point count.
         void completeGame();
+        //Returns the players current score.
+        int getScore();
         //True if the player has a complete row of tiles on their wall, signaling the end of the game.
         bool completeRow();
         /**
@@ -39,8 +41,10 @@ class Player{
         std::string getName();
         //Debug method, prints relevant player details to cout.
         void debug_printAll();
-        //Returns a string to display to the player.
-        std::string toString();
+        //Returns a string of the pattern line and tile wall to display to the player.
+        std::string toString(int row);
+        //Returns a string of the tile floor to display to the player.
+        std::string floorToString();
 
     private: 
         //Add a tile to the players floor. Any tiles that don't fit will be placed back in the bag.

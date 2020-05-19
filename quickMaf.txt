@@ -1,0 +1,56 @@
+1
+Player 1
+Player 2
+turn 1 D 0
+turn 2 U 0
+turn 3 U 1
+turn 4 Y 1
+turn 5 R 4
+turn 0 B 3
+turn 0 Y 2
+turn 0 D 2
+turn 0 R 3
+turn 1 R 0
+turn 2 Y 0
+turn 3 Y 1
+turn 4 R 1
+turn 5 U 2
+turn 0 U 4
+turn 0 D 3
+turn 0 R 3
+turn 0 B 4
+turn 0 Y 2
+skip
+turn 1 Y 0
+turn 2 B 0
+turn 3 B 2
+turn 4 U 4
+turn 5 Y 4
+turn 0 B 2
+turn 0 R 1
+turn 0 D 3
+turn 0 Y 4
+turn 0 U 4
+skip
+turn 1 D 0
+turn 2 U 0
+turn 3 R 2
+turn 4 Y 3
+turn 5 R 4
+turn 0 Y 4
+turn 0 B 3
+turn 0 D 2
+turn 0 U 1
+skip
+turn 1 B 0
+turn 2 D 4
+turn 3 R 4
+turn 4 B 3
+turn 5 D 3
+turn 0 Y 2
+turn 0 D 3
+turn 0 B 3
+turn 0 R 4
+skip
+turn 0 U 2
+

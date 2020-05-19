@@ -21,7 +21,7 @@ class gameEngine{
         //Resumes a game from a savestate.
         void startGame(std::string saveGame);
         //Performs round with players in player array.
-        void round();
+        void round(int startingPlayer);
 
     private:
         //Array containing the games players.
@@ -38,6 +38,15 @@ class gameEngine{
         bool checkGameFinsihed();
         //Returns true if each factory is empty, otherwise false.
         bool checkFactoriesEmpty();
+        //Removes the first player token from the tilebag and boxlid, and places it into the center factory.
+        void resetFirstPlayerToken();
+        //Pointer to the first player token.
+        Tile* firstPlayerToken;
+
+        std::vector<std::string> getPlayerTurnCommand();
+
+        bool quitGameFlag;
 };
+
 
 #endif // GAME_ENGINE_H
