@@ -298,7 +298,7 @@ vector<string> GameEngine::split(const string splitString, char delimiter) {
 
 string GameEngine::replaceAll(string line, string replace) {
     string data = line;
-	int pos = data.find(replace);
+	unsigned int pos = data.find(replace);
 	while(pos != string::npos) {
 		data.replace(pos, replace.size(), "");
 		pos = data.find(replace, pos);
