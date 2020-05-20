@@ -46,6 +46,9 @@ class GameEngine{
         void loadTileBag(string line);
         void loadBoxLid(string line);
         void loadPlayer(string name, string points, int pos);
+        void loadPlayerPattern(string pattern, int row, int pos);
+        void loadPlayerMosiac(string mosiac, int row, int pos);
+        void loadPlayerBrokenTiles(string brokenTiles, int pos);
 
         vector<string> split(const string splitString, char delimiter);
         string replaceAll(string line, string replace);

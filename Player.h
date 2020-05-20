@@ -50,6 +50,10 @@ class Player{
         //Returns a string of the tile floor to display to the player.
         std::string floorToString();
 
+        void appendPatterns(int row, vector<Tile*> tiles);
+        void appendMosiac(int row, vector<Tile*> tiles);
+        void appendFloor(vector<Tile*> tiles);
+
         // Outputs patterns in string format to save into file
         std::string patternsToString(int row);
         // Outputs mosiac in string format to save into file

@@ -222,7 +222,7 @@ void GameEngine::saveGame(string fileName) {
         saveFile << this->players[0]->mosiacToString(rowNo) << endl;
     }
 
-    saveFile << "// Broken tiles + first player token" << endl;
+    saveFile << "// Broken tiles 1 + first player token" << endl;
     saveFile << this->players[0]->floorToString() << endl;
 
     saveFile << "// player 2 save data" << endl;
@@ -240,7 +240,7 @@ void GameEngine::saveGame(string fileName) {
         saveFile << this->players[0]->mosiacToString(rowNo) << endl;
     }
 
-    saveFile << "// Broken tiles + first player token" << endl;
+    saveFile << "// Broken tiles 2 + first player token" << endl;
     saveFile << this->players[1]->floorToString() << endl;
 
     saveFile.close();
@@ -254,7 +254,6 @@ void GameEngine::loadGame(string filename) {
             string line;
             std::getline(saveFile, line);
             int gameType = this->GameType(line);
-            std::cout << "Game Type" <<  gameType << endl;
             if (gameType >= 1 && gameType <= 6) {
                 this->loadFactories(line, gameType - 1);
             } else if (gameType == 7) {
@@ -269,9 +268,18 @@ void GameEngine::loadGame(string filename) {
                 std::getline(saveFile, points);
                 this->loadPlayer(name, points, gameType == 9 ? 0 : 1);
             } else if (gameType == 11 || gameType == 12) {
-                //
+                for(int rowNo = 0; rowNo < 5; rowNo++){
+                    std::getline(saveFile, line);
+                    this->loadPlayerPattern(line, rowNo, gameType == 11 ? 0 : 1);
+                }
             } else if (gameType == 13 || gameType == 14) {
-                //
+                for(int rowNo = 0; rowNo < 5; rowNo++){
+                    std::getline(saveFile, line);
+                    this->loadPlayerMosiac(line, rowNo, gameType == 13 ? 0 : 1);
+                }
+            } else if (gameType == 15 || gameType == 16) {
+                std::getline(saveFile, line);
+                this->loadPlayerBrokenTiles(line, gameType == 15 ? 0 : 1);
             }
         }
     }
@@ -333,6 +341,40 @@ void GameEngine::loadFactories(string factories, int pos) {
     }
 }
 
+void GameEngine::loadPlayerPattern(string pattern, int row, int pos) {
+    vector<string> playerPatternString = this->split(pattern, ' ');
+    vector<Tile*> tiles;
+    for (string colour : playerPatternString) {
+        if (colour.compare(".") != 0) {
+            tiles.push_back(new Tile(colour));
+        }
+    }
+    this->players[pos]->appendPatterns(row, tiles);
+}
+
+void GameEngine::loadPlayerMosiac(string mosiac, int row, int pos) {
+    vector<string> playerMosiacString = this->split(mosiac, ' ');
+    vector<Tile*> tiles;
+    for (string colour : playerMosiacString) {
+        if (colour.compare(".") != 0) {
+            tiles.push_back(new Tile(colour));
+        }
+    }
+    this->players[pos]->appendMosiac(row, tiles);
+}
+
+void GameEngine::loadPlayerBrokenTiles(string brokenTiles, int pos) {
+    string replaceString = "// Broken tiles ";
+    replaceString.append(std::to_string(pos));
+    replaceString.append(" + first player token");
+    vector<string> brokenTilesString = this->split(this->replaceAll(brokenTiles, replaceString), ' ');
+    vector<Tile*> colourTiles;
+    for (string colour : brokenTilesString) {
+        colourTiles.push_back(new Tile(colour));
+    }
+    this->players[pos]->appendFloor(colourTiles);
+}
+
 int GameEngine::GameType(string line) {
     if (line.find("// factory 0") != string::npos) {
         return 1;
@@ -362,6 +404,10 @@ int GameEngine::GameType(string line) {
         return 13;
     } else if (line.find("// Player 2 Mosaic/GameBoard") != string::npos) {
         return 14;
+    } else if (line.find("// Broken tiles 1 + first player token") != string::npos) {
+        return 15;
+    } else if (line.find("// Broken tiles 2 + first player token") != string::npos) {
+        return 16;
     } else {
         return -1;
     }

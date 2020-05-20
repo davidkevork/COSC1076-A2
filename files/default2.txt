@@ -28,7 +28,7 @@ true
 . . . . .
 . . . . .
 
-// Broken tiles + first player token
+// Broken tiles 1 + first player token
 . . . . . . .
 
 // player 2 save data
@@ -50,5 +50,5 @@ false
 . . . . .
 . . . . .
 
-// Broken tiles + first player token
+// Broken tiles 2 + first player token
 . . . . . . .

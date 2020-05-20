@@ -286,6 +286,23 @@ std::string Player::floorToString(){
     return result;
 }
 
+void Player::appendPatterns(int row, vector<Tile*> tiles) {
+    for (unsigned int i = 0; i < tiles.size(); i++) {
+        this->PatternLine[row][i] = tiles[i];
+    }
+}
+
+void Player::appendMosiac(int row, vector<Tile*> tiles) {
+    for (unsigned int i = 0; i < tiles.size(); i++) {
+        this->TileWall[row][i] = tiles[i];
+    }
+}
+void Player::appendFloor(vector<Tile*> tiles) {
+    for (unsigned int i = 0; i < tiles.size(); i++) {
+        this->TileFloor[i] = tiles[i];
+    }
+}
+
 std::string Player::patternsToString(int row) {
     std::string result = "";
     //Add pattern lines.
