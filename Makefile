@@ -5,7 +5,7 @@ all: azul
 clean:
 	rm -f azul *.o
 
-azul: Credits.o Menu.o main.o BoxLid.o Factory.o GameEngine.o TileBag.o Tile.o TileLList.o TileNode.o Player.o
+azul: BoxLid.o Credits.o Factory.o GameEngine.o main.o Menu.o Player.o PointCalculator.o Tile.o TileBag.o TileLList.o TileNode.o
 	g++ -Wall -Werror -std=c++14 -g -O -o $@ $^
 
 %.o: %.cpp
