@@ -285,3 +285,46 @@ std::string Player::floorToString(){
     }
     return result;
 }
+
+void Player::appendPatterns(int row, vector<Tile*> tiles) {
+    for (unsigned int i = 0; i < tiles.size(); i++) {
+        this->PatternLine[row][i] = tiles[i];
+    }
+}
+
+void Player::appendMosiac(int row, vector<Tile*> tiles) {
+    for (unsigned int i = 0; i < tiles.size(); i++) {
+        this->TileWall[row][i] = tiles[i];
+    }
+}
+void Player::appendFloor(vector<Tile*> tiles) {
+    for (unsigned int i = 0; i < tiles.size(); i++) {
+        this->TileFloor[i] = tiles[i];
+    }
+}
+
+std::string Player::patternsToString(int row) {
+    std::string result = "";
+    //Add pattern lines.
+    for(int col = row; col >= 0; col--){
+        if(this->PatternLine[row][col] != nullptr){
+            result = result + this->PatternLine[row][col]->getColour() + " ";
+        } else {
+            result = result + ". ";
+        }   
+    }
+    return result;
+}
+
+std::string Player::mosiacToString(int row) {
+    std::string result = "";
+    //Add tile wall.
+    for(int col = 0; col < WALL_COLUMNS; col++){
+        if(this->TileWall[row][col] != nullptr){
+            result = result + this->TileWall[row][col]->getColour() + " ";
+        } else {
+            result = result + ". ";
+        }
+    }
+    return result;
+}

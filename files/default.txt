@@ -28,7 +28,7 @@ bbb.
 . r . y .
 . r . y .
 
-// Broken tiles + first player token
+// Broken tiles 1 + first player token
 r r b y b y g
 
 // player 2 save data
@@ -50,5 +50,5 @@ bbb.
 . r . y .
 . r . y .
 
-// Broken tiles + first player token
+// Broken tiles 2 + first player token
 r r b y b y g
