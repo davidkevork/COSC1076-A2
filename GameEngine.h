@@ -21,8 +21,6 @@ class GameEngine{
         GameEngine();
         //Starts a fresh game.
         void startGame();
-        //Resumes a game from a savestate.
-        void startGame(std::string saveGame);
         //Performs round with players in player array.
         void round(int startingPlayer);
 

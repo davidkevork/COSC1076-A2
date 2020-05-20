@@ -109,10 +109,6 @@ void GameEngine::startGame() {
     }
 }
 
-void GameEngine::startGame(string saveGame) {
-
-}
-
 void GameEngine::round(int startingPlayer) {
     int currentPlayer = startingPlayer;
     //Fill factorys from bag.
@@ -140,9 +136,9 @@ void GameEngine::round(int startingPlayer) {
             cout << factoryNo << ": " << this->factories[factoryNo]->toString()<<endl;
         }
         //Print player board.
-        cout<<"Moziac: "<<endl;
+        cout<<"Mosiac: "<<endl;
         for(int rowNo = 0; rowNo < 5; rowNo++){
-            cout<< rowNo << ": ";
+            cout<< rowNo + 1 << ": ";
             cout<< this->players[currentPlayer]->toString(rowNo) << endl;
         }
         cout<<"Broken tiles: "<<endl;
@@ -156,6 +152,7 @@ void GameEngine::round(int startingPlayer) {
                 try{
                     int factoryIndex = std::stoi(playerCommand.at(1));
                     int patternLine = std::stoi(playerCommand.at(3));
+                    patternLine = patternLine - 1; // since we are showing index 0 as 1
                     Factory* targetFactory = this->factories[factoryIndex];
                     std::vector<Tile*> tiles = targetFactory->getAll(playerCommand.at(2).front());
                     if(tiles.size()!=0){
@@ -216,21 +213,17 @@ void GameEngine::saveGame(string fileName) {
     saveFile << this->players[0]->getPlayerPoints() << endl;
 
     saveFile << "// Player 1 Patterns" << endl;
-    // r
-    // yy
-    // ...
-    // bbb.
-    // .....
+    for(int rowNo = 0; rowNo < 5; rowNo++){
+        saveFile << this->players[0]->patternsToString(rowNo) << endl;
+    }
 
     saveFile << "// Player 1 Mosaic/GameBoard" << endl;
-    // . r . y .
-    // . r . y .
-    // . r . y .
-    // . r . y .
-    // . r . y .
+    for(int rowNo = 0; rowNo < 5; rowNo++){
+        saveFile << this->players[0]->mosiacToString(rowNo) << endl;
+    }
 
     saveFile << "// Broken tiles + first player token" << endl;
-    // r r b y b y g
+    saveFile << this->players[0]->floorToString() << endl;
 
     saveFile << "// player 2 save data" << endl;
     saveFile << this->players[1]->getName() << endl;
@@ -238,21 +231,18 @@ void GameEngine::saveGame(string fileName) {
     saveFile << this->players[1]->getPlayerPoints() << endl;
 
     saveFile << "// Player 2 Patterns" << endl;
-    // r
-    // yy
-    // ...
-    // bbb.
-    // .....
+    for(int rowNo = 0; rowNo < 5; rowNo++){
+        saveFile << this->players[1]->patternsToString(rowNo) << endl;
+    }
 
     saveFile << "// Player 2 Mosaic/GameBoard" << endl;
-    // . r . y .
-    // . r . y .
-    // . r . y .
-    // . r . y .
-    // . r . y .
+    for(int rowNo = 0; rowNo < 5; rowNo++){
+        saveFile << this->players[0]->mosiacToString(rowNo) << endl;
+    }
 
     saveFile << "// Broken tiles + first player token" << endl;
-    // r r b y b y g
+    saveFile << this->players[1]->floorToString() << endl;
+
     saveFile.close();
 }
 
@@ -264,7 +254,8 @@ void GameEngine::loadGame(string filename) {
             string line;
             std::getline(saveFile, line);
             int gameType = this->GameType(line);
-            if (gameType >= 1 || gameType <= 6) {
+            std::cout << "Game Type" <<  gameType << endl;
+            if (gameType >= 1 && gameType <= 6) {
                 this->loadFactories(line, gameType - 1);
             } else if (gameType == 7) {
                 this->loadTileBag(line);
@@ -298,11 +289,12 @@ vector<string> GameEngine::split(const string splitString, char delimiter) {
 
 string GameEngine::replaceAll(string line, string replace) {
     string data = line;
-	unsigned int pos = data.find(replace);
-	while(pos != string::npos) {
-		data.replace(pos, replace.size(), "");
-		pos = data.find(replace, pos);
+	unsigned int startPosition = data.find(replace);
+
+	if (startPosition < line.size()) {
+		data.replace(startPosition, replace.size(), "");
 	}
+
     return data;
 }
 
@@ -325,7 +317,6 @@ void GameEngine::loadBoxLid(string line) {
     }
 }
 
-
 void GameEngine::loadFactories(string factories, int pos) {
     vector<string> splitString;
     if (pos == 0) {
@@ -334,7 +325,7 @@ void GameEngine::loadFactories(string factories, int pos) {
         splitString.push_back(factories0);
     } else {
         string replace = "// factory ";
-        replace.push_back(pos);
+        replace.append(std::to_string(pos));
         splitString = this->split(this->replaceAll(factories, replace), ' ');
     }
     for (string colour : splitString) {
