@@ -178,7 +178,7 @@ void GameEngine::round(int startingPlayer) {
                 this->quitGameFlag=true;
             } else if(playerCommand.front()=="save" && playerCommand.size()>=2){
                 cout<<"Saving to file: "<<playerCommand.at(1)<<".azul"<<endl;
-                //Handle save.
+                this->saveGame(playerCommand.at(1));
                 validInput = true;
             } else if(playerCommand.front()=="skip"){
                 cout<<"Skipping turn."<<endl;
