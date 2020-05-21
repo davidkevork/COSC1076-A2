@@ -23,11 +23,12 @@ void Menu::runMenu() {
     while(this->choice != 4) {
         this->printMenu();
         cout << "> ";
-        cin>>this->choice;
-        //Removes the trailing \n from cin.
+        cin >> this->choice;
+        // Removes the trailing \n from cin.
+        cin.clear();
+        // cin.ignore();
         std::string catcher;
         std::getline(cin, catcher);
-        
         this->runChoice();
     }
 }
@@ -43,23 +44,24 @@ void Menu::printMenu() {
 }
 
 void Menu::runChoice() {
-    if(choice == 1) {
+    if(this->choice == 1) {
         cout << endl<< "Starting a New Game" << endl << endl;
         this->ge->startGame();
-    } else if(choice == 2) {
+    } else if(this->choice == 2) {
         cout << endl<< "Enter File:" << endl << endl;
         std::string saveGame = "";
         cin >> saveGame;
-        this->ge->startGame(saveGame);
-    } else if(choice == 3) {
+        this->ge->loadGame(saveGame);
+    } else if(this->choice == 3) {
         this->credits();
-    } else if(choice == 4){
+    } else if(this->choice == 4){
         cout << "Goodbye!" << endl;
         this->choice = 4;
     } else if(cin.eof()) {
         cout << "Goodbye!" << endl;
         this->choice = 4;
-    }else {
+    } else {
+        this->choice = 0;
         cout << "Invalid Input" << endl;
     }
 }
