@@ -21,6 +21,8 @@ class GameEngine{
         GameEngine();
         //Starts a fresh game.
         void startGame();
+        //starts the game with a loaded game
+        void startGame(int isloadGame);
         //Performs round with players in player array.
         void round(int startingPlayer);
 
@@ -40,6 +42,8 @@ class GameEngine{
         BoxLid* boxLid;
         //Round number
         int roundno;
+        // current player number whos turn is to play
+        int playerNumTurn;
 
         int GameType(string line);
         void loadFactories(string factories, int pos);

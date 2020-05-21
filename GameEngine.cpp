@@ -30,40 +30,46 @@ GameEngine::GameEngine() {
 
     this->tileBag = new TileBag();
     this->boxLid = new BoxLid();
-
-    for(int i = 0; i < NUM_TILES; i++){
-        this->tileBag->append(new Tile(RED));
-        this->tileBag->append(new Tile(YELLOW));
-        this->tileBag->append(new Tile(LBLUE));
-        this->tileBag->append(new Tile(DBLUE));
-        this->tileBag->append(new Tile(BLACK));
-    }
-
     this->firstPlayerToken = new Tile(FIRST_PLAYER);
+    this->playerNumTurn = 0;
 }
 
 void GameEngine::startGame() {
-    //Player 1 Creation
-    std::string player1name;
-    cout << "Enter a name for player 1" << endl;
-    cout << "> ";
-    std::getline(cin, player1name);
-    Player* player1 = new Player(player1name, this->boxLid);
-    cout << endl;
-    //Player 2 Creation
-    std::string player2name;
-    cout << "Enter a name for player 2" << endl;
-    cout << "> ";
-    std::getline(cin, player2name);
-    Player* player2 = new Player(player2name, this->boxLid);
-    cout << endl;
+    this->startGame(0);
+}
 
-    this->players[0] = player1;
-    this->players[1] = player2;
+void GameEngine::startGame(int isloadGame) {
+    if (isloadGame == 0) {
+        for(int i = 0; i < NUM_TILES; i++){
+            this->tileBag->append(new Tile(RED));
+            this->tileBag->append(new Tile(YELLOW));
+            this->tileBag->append(new Tile(LBLUE));
+            this->tileBag->append(new Tile(DBLUE));
+            this->tileBag->append(new Tile(BLACK));
+        }
+
+        //Player 1 Creation
+        std::string player1name;
+        cout << "Enter a name for player 1" << endl;
+        cout << "> ";
+        std::getline(cin, player1name);
+        Player* player1 = new Player(player1name, this->boxLid);
+        cout << endl;
+        //Player 2 Creation
+        std::string player2name;
+        cout << "Enter a name for player 2" << endl;
+        cout << "> ";
+        std::getline(cin, player2name);
+        Player* player2 = new Player(player2name, this->boxLid);
+        cout << endl;
+
+        this->players[0] = player1;
+        this->players[1] = player2;
+    }
 
     cout << "Let's Play!" << endl << endl;
     this->quitGameFlag = false;
-    int currentPlayer = 0;
+    int currentPlayer = isloadGame == 0 ? 0 : this->playerNumTurn;
     while(!this->quitGameFlag){
         round(currentPlayer);
         //Determine who is first next round.
@@ -111,6 +117,7 @@ void GameEngine::startGame() {
 
 void GameEngine::round(int startingPlayer) {
     int currentPlayer = startingPlayer;
+    this->playerNumTurn = currentPlayer;
     //Fill factorys from bag.
     this->factories[0]->moveToContainer(this->boxLid);
     resetFirstPlayerToken();
@@ -190,6 +197,7 @@ void GameEngine::round(int startingPlayer) {
             //Increment current player
             currentPlayer++;
             currentPlayer = currentPlayer % NUM_PLAYERS;
+            this->playerNumTurn = currentPlayer;
         }
     }
 }
@@ -214,7 +222,7 @@ void GameEngine::saveGame(string fileName) {
 
     saveFile << "// player 1 save data" << endl;
     saveFile << this->players[0]->getName() << endl;
-    saveFile << "false" << endl;
+    saveFile << (this->playerNumTurn == 0 ? "true" : "false") << endl;
     saveFile << this->players[0]->getPlayerPoints() << endl;
 
     saveFile << endl;
@@ -240,7 +248,7 @@ void GameEngine::saveGame(string fileName) {
 
     saveFile << "// player 2 save data" << endl;
     saveFile << this->players[1]->getName() << endl;
-    saveFile << "true" << endl;
+    saveFile << (this->playerNumTurn == 0 ? "false" : "true") << endl;
     saveFile << this->players[1]->getPlayerPoints() << endl;
 
     saveFile << endl;
@@ -302,6 +310,7 @@ void GameEngine::loadGame(string filename) {
             }
         }
     }
+    this->startGame(1);
 }
 
 vector<string> GameEngine::split(const string splitString, char delimiter) {
@@ -346,15 +355,14 @@ void GameEngine::loadBoxLid(string line) {
 
 void GameEngine::loadFactories(string factories, int pos) {
     vector<string> splitString;
+    string replace = "";
     if (pos == 0) {
-        string factories0;
-        factories0.push_back(factories.at(0));
-        splitString.push_back(factories0);
+        replace.append("// factory 0 centre table + first player token");
     } else {
-        string replace = "// factory ";
+        replace.append("// factory ");
         replace.append(std::to_string(pos));
-        splitString = this->split(this->replaceAll(factories, replace), ' ');
     }
+    splitString = this->split(this->replaceAll(factories, replace), ' ');
     for (string colour : splitString) {
         this->factories[pos]->append(new Tile(colour));
     }
@@ -389,7 +397,9 @@ void GameEngine::loadPlayerBrokenTiles(string brokenTiles, int pos) {
     vector<string> brokenTilesString = this->split(this->replaceAll(brokenTiles, replaceString), ' ');
     vector<Tile*> colourTiles;
     for (string colour : brokenTilesString) {
-        colourTiles.push_back(new Tile(colour));
+        if (colour.compare(".") != 0) {
+            colourTiles.push_back(new Tile(colour));
+        }
     }
     this->players[pos]->appendFloor(colourTiles);
 }

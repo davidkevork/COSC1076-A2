@@ -285,6 +285,9 @@ std::string Player::floorToString(){
             result = result + "." + " ";
         }
     }
+    if (result.size() > 0) {
+        result.pop_back();
+    }
     return result;
 }
 
@@ -315,6 +318,9 @@ std::string Player::patternsToString(int row) {
             result = result + ". ";
         }   
     }
+    if (result.size() > 0) {
+        result.pop_back();
+    }
     return result;
 }
 
@@ -327,6 +333,9 @@ std::string Player::mosiacToString(int row) {
         } else {
             result = result + ". ";
         }
+    }
+    if (result.size() > 0) {
+        result.pop_back();
     }
     return result;
 }
