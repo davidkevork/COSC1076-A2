@@ -192,9 +192,9 @@ void GameEngine::round(int startingPlayer) {
         }
     }
 }
+
 void GameEngine::saveGame(string fileName) {
     std::ofstream saveFile(fileName);
-    saveFile.open(fileName);
 
     saveFile << "// game state data" << endl;
     saveFile << this->factories[0]->toString() << "// factory 0 centre table + first player token" << endl;
@@ -204,41 +204,59 @@ void GameEngine::saveGame(string fileName) {
     saveFile << this->factories[4]->toString() << "// factory 4" << endl;
     saveFile << this->factories[5]->toString() << "// factory 5" << endl;
 
+    saveFile << endl;
+
     saveFile << this->tileBag->toString() << "// Tile Bag" << endl;
     saveFile << this->boxLid->toString() << "// Box Lid" << endl;
+
+    saveFile << endl;
 
     saveFile << "// player 1 save data" << endl;
     saveFile << this->players[0]->getName() << endl;
     saveFile << "false" << endl;
     saveFile << this->players[0]->getPlayerPoints() << endl;
 
+    saveFile << endl;
+
     saveFile << "// Player 1 Patterns" << endl;
     for(int rowNo = 0; rowNo < 5; rowNo++){
         saveFile << this->players[0]->patternsToString(rowNo) << endl;
     }
+
+    saveFile << endl;
 
     saveFile << "// Player 1 Mosaic/GameBoard" << endl;
     for(int rowNo = 0; rowNo < 5; rowNo++){
         saveFile << this->players[0]->mosiacToString(rowNo) << endl;
     }
 
+    saveFile << endl;
+
     saveFile << "// Broken tiles 1 + first player token" << endl;
     saveFile << this->players[0]->floorToString() << endl;
+
+    saveFile << endl;
 
     saveFile << "// player 2 save data" << endl;
     saveFile << this->players[1]->getName() << endl;
     saveFile << "true" << endl;
     saveFile << this->players[1]->getPlayerPoints() << endl;
 
+    saveFile << endl;
+
     saveFile << "// Player 2 Patterns" << endl;
     for(int rowNo = 0; rowNo < 5; rowNo++){
         saveFile << this->players[1]->patternsToString(rowNo) << endl;
     }
 
+    saveFile << endl;
+
     saveFile << "// Player 2 Mosaic/GameBoard" << endl;
     for(int rowNo = 0; rowNo < 5; rowNo++){
         saveFile << this->players[0]->mosiacToString(rowNo) << endl;
     }
+
+    saveFile << endl;
 
     saveFile << "// Broken tiles 2 + first player token" << endl;
     saveFile << this->players[1]->floorToString() << endl;

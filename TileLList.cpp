@@ -131,6 +131,8 @@ std::string TileLList::toString() {
         out.append(" ");
         currentTile = currentTile->getNext();
     }
-    out.pop_back();
+    if (out.size() > 1) {
+        out.pop_back();
+    }
     return out;
 }
