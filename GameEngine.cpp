@@ -129,7 +129,7 @@ void GameEngine::round(int startingPlayer) {
     //Loop over until all empty or game needs to quit.
     this->quitGameFlag = false;
     while(!this->checkFactoriesEmpty()&&!this->quitGameFlag){
-        cout << "TURN FOR PLAYER: " << this->players[currentPlayer]->getName() << endl << endl;
+        cout << endl << "TURN FOR PLAYER: " << this->players[currentPlayer]->getName() << endl << endl;
         //Print factories.
         cout<<"Factories:"<<endl;
         for(int factoryNo = 0; factoryNo < NUM_FACTORIES; factoryNo++){
@@ -143,6 +143,7 @@ void GameEngine::round(int startingPlayer) {
         }
         cout<<"Broken tiles: "<<endl;
         cout<<this->players[currentPlayer]->floorToString() << endl;
+        cout<<endl;
 
         //Player command input:
         bool validInput = false;

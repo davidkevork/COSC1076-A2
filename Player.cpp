@@ -281,6 +281,8 @@ std::string Player::floorToString(){
     for(int i = 0; i < FLOOR_SIZE; i++){
         if(this->TileFloor[i]!=nullptr){
             result = result + this->TileFloor[i]->getColour() + " ";
+        }else if(this->TileFloor[i]==nullptr){
+            result = result + "." + " ";
         }
     }
     return result;
