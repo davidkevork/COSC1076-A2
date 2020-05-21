@@ -281,7 +281,12 @@ std::string Player::floorToString(){
     for(int i = 0; i < FLOOR_SIZE; i++){
         if(this->TileFloor[i]!=nullptr){
             result = result + this->TileFloor[i]->getColour() + " ";
+        }else if(this->TileFloor[i]==nullptr){
+            result = result + "." + " ";
         }
+    }
+    if (result.size() > 0) {
+        result.pop_back();
     }
     return result;
 }
@@ -313,6 +318,9 @@ std::string Player::patternsToString(int row) {
             result = result + ". ";
         }   
     }
+    if (result.size() > 0) {
+        result.pop_back();
+    }
     return result;
 }
 
@@ -325,6 +333,9 @@ std::string Player::mosiacToString(int row) {
         } else {
             result = result + ". ";
         }
+    }
+    if (result.size() > 0) {
+        result.pop_back();
     }
     return result;
 }

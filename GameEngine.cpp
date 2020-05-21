@@ -30,40 +30,46 @@ GameEngine::GameEngine() {
 
     this->tileBag = new TileBag();
     this->boxLid = new BoxLid();
-
-    for(int i = 0; i < NUM_TILES; i++){
-        this->tileBag->append(new Tile(RED));
-        this->tileBag->append(new Tile(YELLOW));
-        this->tileBag->append(new Tile(LBLUE));
-        this->tileBag->append(new Tile(DBLUE));
-        this->tileBag->append(new Tile(BLACK));
-    }
-
     this->firstPlayerToken = new Tile(FIRST_PLAYER);
+    this->playerNumTurn = 0;
 }
 
 void GameEngine::startGame() {
-    //Player 1 Creation
-    std::string player1name;
-    cout << "Enter a name for player 1" << endl;
-    cout << "> ";
-    std::getline(cin, player1name);
-    Player* player1 = new Player(player1name, this->boxLid);
-    cout << endl;
-    //Player 2 Creation
-    std::string player2name;
-    cout << "Enter a name for player 2" << endl;
-    cout << "> ";
-    std::getline(cin, player2name);
-    Player* player2 = new Player(player2name, this->boxLid);
-    cout << endl;
+    this->startGame(0);
+}
 
-    this->players[0] = player1;
-    this->players[1] = player2;
+void GameEngine::startGame(int isloadGame) {
+    if (isloadGame == 0) {
+        for(int i = 0; i < NUM_TILES; i++){
+            this->tileBag->append(new Tile(RED));
+            this->tileBag->append(new Tile(YELLOW));
+            this->tileBag->append(new Tile(LBLUE));
+            this->tileBag->append(new Tile(DBLUE));
+            this->tileBag->append(new Tile(BLACK));
+        }
+
+        //Player 1 Creation
+        std::string player1name;
+        cout << "Enter a name for player 1" << endl;
+        cout << "> ";
+        std::getline(cin, player1name);
+        Player* player1 = new Player(player1name, this->boxLid);
+        cout << endl;
+        //Player 2 Creation
+        std::string player2name;
+        cout << "Enter a name for player 2" << endl;
+        cout << "> ";
+        std::getline(cin, player2name);
+        Player* player2 = new Player(player2name, this->boxLid);
+        cout << endl;
+
+        this->players[0] = player1;
+        this->players[1] = player2;
+    }
 
     cout << "Let's Play!" << endl << endl;
     this->quitGameFlag = false;
-    int currentPlayer = 0;
+    int currentPlayer = isloadGame == 0 ? 0 : this->playerNumTurn;
     while(!this->quitGameFlag){
         round(currentPlayer);
         //Determine who is first next round.
@@ -111,6 +117,7 @@ void GameEngine::startGame() {
 
 void GameEngine::round(int startingPlayer) {
     int currentPlayer = startingPlayer;
+    this->playerNumTurn = currentPlayer;
     //Fill factorys from bag.
     this->factories[0]->moveToContainer(this->boxLid);
     resetFirstPlayerToken();
@@ -129,7 +136,7 @@ void GameEngine::round(int startingPlayer) {
     //Loop over until all empty or game needs to quit.
     this->quitGameFlag = false;
     while(!this->checkFactoriesEmpty()&&!this->quitGameFlag){
-        cout << "TURN FOR PLAYER: " << this->players[currentPlayer]->getName() << endl << endl;
+        cout << endl << "TURN FOR PLAYER: " << this->players[currentPlayer]->getName() << endl << endl;
         //Print factories.
         cout<<"Factories:"<<endl;
         for(int factoryNo = 0; factoryNo < NUM_FACTORIES; factoryNo++){
@@ -143,6 +150,7 @@ void GameEngine::round(int startingPlayer) {
         }
         cout<<"Broken tiles: "<<endl;
         cout<<this->players[currentPlayer]->floorToString() << endl;
+        cout<<endl;
 
         //Player command input:
         bool validInput = false;
@@ -178,7 +186,7 @@ void GameEngine::round(int startingPlayer) {
                 this->quitGameFlag=true;
             } else if(playerCommand.front()=="save" && playerCommand.size()>=2){
                 cout<<"Saving to file: "<<playerCommand.at(1)<<".azul"<<endl;
-                //Handle save.
+                this->saveGame(playerCommand.at(1));
                 validInput = true;
             } else if(playerCommand.front()=="skip"){
                 cout<<"Skipping turn."<<endl;
@@ -189,12 +197,13 @@ void GameEngine::round(int startingPlayer) {
             //Increment current player
             currentPlayer++;
             currentPlayer = currentPlayer % NUM_PLAYERS;
+            this->playerNumTurn = currentPlayer;
         }
     }
 }
+
 void GameEngine::saveGame(string fileName) {
     std::ofstream saveFile(fileName);
-    saveFile.open(fileName);
 
     saveFile << "// game state data" << endl;
     saveFile << this->factories[0]->toString() << "// factory 0 centre table + first player token" << endl;
@@ -204,41 +213,59 @@ void GameEngine::saveGame(string fileName) {
     saveFile << this->factories[4]->toString() << "// factory 4" << endl;
     saveFile << this->factories[5]->toString() << "// factory 5" << endl;
 
+    saveFile << endl;
+
     saveFile << this->tileBag->toString() << "// Tile Bag" << endl;
     saveFile << this->boxLid->toString() << "// Box Lid" << endl;
 
+    saveFile << endl;
+
     saveFile << "// player 1 save data" << endl;
     saveFile << this->players[0]->getName() << endl;
-    saveFile << "false" << endl;
+    saveFile << (this->playerNumTurn == 0 ? "true" : "false") << endl;
     saveFile << this->players[0]->getPlayerPoints() << endl;
+
+    saveFile << endl;
 
     saveFile << "// Player 1 Patterns" << endl;
     for(int rowNo = 0; rowNo < 5; rowNo++){
         saveFile << this->players[0]->patternsToString(rowNo) << endl;
     }
 
+    saveFile << endl;
+
     saveFile << "// Player 1 Mosaic/GameBoard" << endl;
     for(int rowNo = 0; rowNo < 5; rowNo++){
         saveFile << this->players[0]->mosiacToString(rowNo) << endl;
     }
 
+    saveFile << endl;
+
     saveFile << "// Broken tiles 1 + first player token" << endl;
     saveFile << this->players[0]->floorToString() << endl;
 
+    saveFile << endl;
+
     saveFile << "// player 2 save data" << endl;
     saveFile << this->players[1]->getName() << endl;
-    saveFile << "true" << endl;
+    saveFile << (this->playerNumTurn == 0 ? "false" : "true") << endl;
     saveFile << this->players[1]->getPlayerPoints() << endl;
+
+    saveFile << endl;
 
     saveFile << "// Player 2 Patterns" << endl;
     for(int rowNo = 0; rowNo < 5; rowNo++){
         saveFile << this->players[1]->patternsToString(rowNo) << endl;
     }
 
+    saveFile << endl;
+
     saveFile << "// Player 2 Mosaic/GameBoard" << endl;
     for(int rowNo = 0; rowNo < 5; rowNo++){
         saveFile << this->players[0]->mosiacToString(rowNo) << endl;
     }
+
+    saveFile << endl;
 
     saveFile << "// Broken tiles 2 + first player token" << endl;
     saveFile << this->players[1]->floorToString() << endl;
@@ -283,6 +310,7 @@ void GameEngine::loadGame(string filename) {
             }
         }
     }
+    this->startGame(1);
 }
 
 vector<string> GameEngine::split(const string splitString, char delimiter) {
@@ -327,15 +355,14 @@ void GameEngine::loadBoxLid(string line) {
 
 void GameEngine::loadFactories(string factories, int pos) {
     vector<string> splitString;
+    string replace = "";
     if (pos == 0) {
-        string factories0;
-        factories0.push_back(factories.at(0));
-        splitString.push_back(factories0);
+        replace.append("// factory 0 centre table + first player token");
     } else {
-        string replace = "// factory ";
+        replace.append("// factory ");
         replace.append(std::to_string(pos));
-        splitString = this->split(this->replaceAll(factories, replace), ' ');
     }
+    splitString = this->split(this->replaceAll(factories, replace), ' ');
     for (string colour : splitString) {
         this->factories[pos]->append(new Tile(colour));
     }
@@ -370,7 +397,9 @@ void GameEngine::loadPlayerBrokenTiles(string brokenTiles, int pos) {
     vector<string> brokenTilesString = this->split(this->replaceAll(brokenTiles, replaceString), ' ');
     vector<Tile*> colourTiles;
     for (string colour : brokenTilesString) {
-        colourTiles.push_back(new Tile(colour));
+        if (colour.compare(".") != 0) {
+            colourTiles.push_back(new Tile(colour));
+        }
     }
     this->players[pos]->appendFloor(colourTiles);
 }
