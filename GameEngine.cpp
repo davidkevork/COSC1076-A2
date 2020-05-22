@@ -158,23 +158,34 @@ void GameEngine::round(int startingPlayer) {
             std::vector<std::string> playerCommand = getPlayerTurnCommand();
             if(playerCommand.front()=="turn" && playerCommand.size()>=4){
                 try{
+                    bool validIndexes = true;
                     int factoryIndex = std::stoi(playerCommand.at(1));
                     int patternLine = std::stoi(playerCommand.at(3));
                     patternLine = patternLine - 1; // since we are showing index 0 as 1
-                    Factory* targetFactory = this->factories[factoryIndex];
-                    std::vector<Tile*> tiles = targetFactory->getAll(playerCommand.at(2).front());
-                    if(tiles.size()!=0){
-                        if(this->players[currentPlayer]->applyTilesToPattern(patternLine, tiles)){
-                            validInput=true;
-                            for(Tile* tile:tiles){
-                                targetFactory->remove(tile);
+                    if(0 > factoryIndex || factoryIndex < 5){
+                        cout<<"Factory index must be between 0 and 5."<<endl;
+                        validIndexes = false;
+                    }
+                    if(1 > patternLine || patternLine < 5){
+                        cout<<"Pattern line index must be between 1 and 5"<<endl;
+                        validIndexes = false;
+                    }
+                    if(validIndexes){
+                        Factory* targetFactory = this->factories[factoryIndex];
+                        std::vector<Tile*> tiles = targetFactory->getAll(playerCommand.at(2).front());
+                        if(tiles.size()!=0){
+                            if(this->players[currentPlayer]->applyTilesToPattern(patternLine, tiles)){
+                                validInput=true;
+                                for(Tile* tile:tiles){
+                                    targetFactory->remove(tile);
+                                }
+                                targetFactory->moveToFactory(this->factories[0]);
+                            } else{
+                                cout<<"Couldn't place those tiles into that patternline"<<endl;
                             }
-                            targetFactory->moveToFactory(this->factories[0]);
-                        } else{
-                            cout<<"Couldn't place those tiles into that patternline"<<endl;
+                        } else {
+                            cout<<"Couldn't find any "<<playerCommand.at(2)<<" tiles in factory "<<playerCommand.at(1)<<endl;
                         }
-                    } else {
-                        cout<<"Couldn't find any of those type of tiles."<<endl;
                     }
                 } catch(const std::invalid_argument &){
                     cout<<"Error processing turn command."<<endl;
