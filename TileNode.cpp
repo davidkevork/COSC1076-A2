@@ -15,14 +15,7 @@ TileNode::TileNode(TileNode&& other): tile(other.getTile()), next(other.getNext(
   this->next = nullptr;
 }
 
-TileNode::~TileNode() {
-  if (this->tile != nullptr) {
-    delete this->tile;
-  }
-  if (this->next != nullptr) {
-    delete this->next;
-  }
-}
+TileNode::~TileNode() {}
 
 Tile* TileNode::getTile() {
   return this->tile;

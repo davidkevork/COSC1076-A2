@@ -5,7 +5,6 @@ TileBag::TileBag(){}
 TileBag::~TileBag(){
     this->tiles.clear();
     this->tiles.shrink_to_fit();
-    delete[] &this->tiles;
 }
 
 std::vector<Tile*> TileBag::getAll(){
