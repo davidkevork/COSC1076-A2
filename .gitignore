@@ -36,3 +36,6 @@
 
 #VSCode settings files.
 .vscode/
+
+#Savegames
+*.game
