@@ -161,15 +161,15 @@ void GameEngine::round(int startingPlayer) {
                     bool validIndexes = true;
                     int factoryIndex = std::stoi(playerCommand.at(1));
                     int patternLine = std::stoi(playerCommand.at(3));
-                    patternLine = patternLine - 1; // since we are showing index 0 as 1
-                    if(0 > factoryIndex || factoryIndex < 5){
+                    if(factoryIndex < 0 || factoryIndex > 5){
                         cout<<"Factory index must be between 0 and 5."<<endl;
                         validIndexes = false;
                     }
-                    if(1 > patternLine || patternLine < 5){
+                    if(patternLine < 1 || patternLine > 5){
                         cout<<"Pattern line index must be between 1 and 5"<<endl;
                         validIndexes = false;
                     }
+                    patternLine = patternLine - 1; //Since we are showing index 0 as 1 to the user.
                     if(validIndexes){
                         Factory* targetFactory = this->factories[factoryIndex];
                         std::vector<Tile*> tiles = targetFactory->getAll(playerCommand.at(2).front());
