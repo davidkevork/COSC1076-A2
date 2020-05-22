@@ -80,4 +80,8 @@ void Menu::credits(){
     student1->print();
     student2->print();
     student3->print();
+
+    delete student1;
+    delete student2;
+    delete student3;
 }
