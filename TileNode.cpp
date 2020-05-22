@@ -1,10 +1,19 @@
 #include "TileNode.h"
 
-TileNode::TileNode(Tile* tile, TileNode* next): tile(tile), next(next) {}
+TileNode::TileNode(Tile* tile, TileNode* next): tile(tile), next(next) {
+  this->tile = nullptr;
+  this->next = nullptr;
+}
 
-TileNode::TileNode(TileNode* other): tile(other->getTile()), next(other->getNext()) {}
+TileNode::TileNode(TileNode* other): tile(other->getTile()), next(other->getNext()) {
+  this->tile = nullptr;
+  this->next = nullptr;
+}
 
-TileNode::TileNode(TileNode&& other): tile(other.getTile()), next(other.getNext()) {}
+TileNode::TileNode(TileNode&& other): tile(other.getTile()), next(other.getNext()) {
+  this->tile = nullptr;
+  this->next = nullptr;
+}
 
 TileNode::~TileNode() {
   if (this->tile != nullptr) {

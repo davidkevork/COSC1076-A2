@@ -32,6 +32,8 @@ GameEngine::GameEngine() {
     this->boxLid = new BoxLid();
     this->firstPlayerToken = new Tile(FIRST_PLAYER);
     this->playerNumTurn = 0;
+    this->players[0] = nullptr;
+    this->players[1] = nullptr;
 }
 
 GameEngine::~GameEngine(){

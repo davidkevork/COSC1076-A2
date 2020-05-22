@@ -9,7 +9,12 @@ TileLList::TileLList() {
 }
 
 TileLList::~TileLList() {
-    delete this->head;  //Tile nodes recursively delete their children.
+    if (this->head != nullptr) {
+        delete this->head;  //Tile nodes recursively delete their children.
+    }
+    if (this->tail != nullptr) {
+        delete this->tail;
+    }
 }
 
 Tile* TileLList::getTile(int index) {

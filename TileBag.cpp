@@ -3,10 +3,9 @@
 TileBag::TileBag(){}
 
 TileBag::~TileBag(){
-    for(Tile* tile:this->tiles){
-        delete tile;
-    }
-    delete &this->tiles;
+    this->tiles.clear();
+    this->tiles.shrink_to_fit();
+    delete[] &this->tiles;
 }
 
 std::vector<Tile*> TileBag::getAll(){

@@ -8,17 +8,17 @@
 #include "Tile.h"
 #include <ctime>
 
-int main(int argc, char* args[]){
-    if(std::string(args[1])=="--help"){
+int main(int argc, char* args[]) {
+    std::string args1 = "";
+    if (argc > 1) {
+        args1 = args[1];
+    }
+    if(args1.compare("--help") == 0) {
         std::cout<<std::endl<<"Usage: Azul.exe [<SEED>]"<<std::endl<<"Seed determines the game's randomness, must be a number."<<std::endl;
-    } else if(std::string(args[1])=="--version"){
-        std::cout<<std::endl<<"Version 0.1"<<std::endl;
+    } else if (args1.compare("--version") == 0) {
+        std::cout<<std::endl<<"Version 1.0.0"<<std::endl;
     } else {
-        try{
-            srand(std::stoi(args[1]));
-        } catch (...) {
-            srand(std::time(0));
-        }
+        srand(argc > 1 ? std::stoi(args1) : std::time(0));
         Menu* menu = new Menu();
         menu->runMenu();
     }
