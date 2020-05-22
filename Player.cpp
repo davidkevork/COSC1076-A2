@@ -118,11 +118,7 @@ bool Player::applyTilesToPattern(int row, std::vector<Tile*> tiles){
 }
 
 Tile* Player::getFloorTile(int index) {
-    Tile* tile = nullptr;
-    if (index < FLOOR_SIZE && index > 0 && this->TileFloor != nullptr) {
-        tile = this->TileFloor[index];
-    }
-    return tile;
+    return this->TileFloor[index];
 }
 
 void Player::addTileToFloor(Tile* tile){
