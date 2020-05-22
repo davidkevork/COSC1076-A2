@@ -19,6 +19,7 @@ using std::string;
 class GameEngine{
     public:
         GameEngine();
+        ~GameEngine();
         //Starts a fresh game.
         void startGame();
         //starts the game with a loaded game

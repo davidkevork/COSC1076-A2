@@ -34,6 +34,17 @@ GameEngine::GameEngine() {
     this->playerNumTurn = 0;
 }
 
+GameEngine::~GameEngine(){
+    for(int i = 0; i < 6; i++){
+        delete this->factories[i];
+    }
+    delete this->tileBag;
+    delete this->boxLid;
+    for(int i = 0; i < 2; i++){
+        delete this->players[i];
+    }
+}
+
 void GameEngine::startGame() {
     this->startGame(0);
 }
