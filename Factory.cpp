@@ -1,15 +1,15 @@
 #include "Factory.h"
 #include <vector>
 #include <string>
+
 Factory::Factory(){
     
 }
 
 Factory::~Factory(){
-    for(Tile* tile:this->tiles){
+    for(Tile* tile : this->tiles){
         delete tile;
     }
-    delete &this->tiles;
 }
 
 std::vector<Tile*> Factory::getAll(){
