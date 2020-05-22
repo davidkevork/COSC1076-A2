@@ -19,12 +19,13 @@ using std::string;
 class GameEngine{
     public:
         GameEngine();
+        ~GameEngine();
         //Starts a fresh game.
         void startGame();
         //starts the game with a loaded game
         void startGame(int isloadGame);
         //Performs round with players in player array.
-        void round(int startingPlayer);
+        void round(int startingPlayer, int isloadGame = 1);
 
         //Save Game
         void saveGame(string fileName);
@@ -64,6 +65,8 @@ class GameEngine{
         void resetFirstPlayerToken();
         //Pointer to the first player token.
         Tile* firstPlayerToken;
+
+        void fillFactoriesFromBag();
 
         std::vector<std::string> getPlayerTurnCommand();
 

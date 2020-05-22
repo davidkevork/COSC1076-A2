@@ -34,6 +34,17 @@ GameEngine::GameEngine() {
     this->playerNumTurn = 0;
 }
 
+GameEngine::~GameEngine(){
+    for(int i = 0; i < 6; i++){
+        delete this->factories[i];
+    }
+    delete this->tileBag;
+    delete this->boxLid;
+    for(int i = 0; i < 2; i++){
+        delete this->players[i];
+    }
+}
+
 void GameEngine::startGame() {
     this->startGame(0);
 }
@@ -66,12 +77,13 @@ void GameEngine::startGame(int isloadGame) {
         this->players[0] = player1;
         this->players[1] = player2;
     }
-
+    
     cout << "Let's Play!" << endl << endl;
     this->quitGameFlag = false;
     int currentPlayer = isloadGame == 0 ? 0 : this->playerNumTurn;
     while(!this->quitGameFlag){
-        round(currentPlayer);
+        round(currentPlayer, isloadGame);
+        isloadGame = 0;
         //Determine who is first next round.
         for(int player = 0; player < 2; player++){
             for(int i = 0; i < FLOOR_SIZE; i++){
@@ -115,23 +127,12 @@ void GameEngine::startGame(int isloadGame) {
     }
 }
 
-void GameEngine::round(int startingPlayer) {
+void GameEngine::round(int startingPlayer, int isloadGame) {
     int currentPlayer = startingPlayer;
     this->playerNumTurn = currentPlayer;
-    //Fill factorys from bag.
-    this->factories[0]->moveToContainer(this->boxLid);
-    resetFirstPlayerToken();
-    for(int factory = 1; factory < 6; factory++){
-        this->factories[factory]->moveToContainer(this->boxLid);
-        for(int tileNo = 0; tileNo < 4; tileNo++){
-            Tile* tile = this->tileBag->getRandomTile();
-            if(tile==nullptr){
-                this->boxLid->moveAllToContainer(this->tileBag);
-                tile = this->tileBag->getRandomTile();
-            }
-            this->factories[factory]->append(tile);
-            this->tileBag->remove(tile);
-        }
+    //Fill factorys from bag if the game wasn't just loaded from a save.
+    if(isloadGame == 0){
+        this->fillFactoriesFromBag();
     }
     //Loop over until all empty or game needs to quit.
     this->quitGameFlag = false;
@@ -161,15 +162,15 @@ void GameEngine::round(int startingPlayer) {
                     bool validIndexes = true;
                     int factoryIndex = std::stoi(playerCommand.at(1));
                     int patternLine = std::stoi(playerCommand.at(3));
-                    patternLine = patternLine - 1; // since we are showing index 0 as 1
-                    if(0 > factoryIndex || factoryIndex < 5){
+                    if(factoryIndex < 0 || factoryIndex > 5){
                         cout<<"Factory index must be between 0 and 5."<<endl;
                         validIndexes = false;
                     }
-                    if(1 > patternLine || patternLine < 5){
+                    if(patternLine < 1 || patternLine > 5){
                         cout<<"Pattern line index must be between 1 and 5"<<endl;
                         validIndexes = false;
                     }
+                    patternLine = patternLine - 1; //Since we are showing index 0 as 1 to the user.
                     if(validIndexes){
                         Factory* targetFactory = this->factories[factoryIndex];
                         std::vector<Tile*> tiles = targetFactory->getAll(playerCommand.at(2).front());
@@ -489,4 +490,21 @@ std::vector<std::string> GameEngine::getPlayerTurnCommand(){
     }
     output.push_back(input);    //Needed to catch the last part of the split input.
     return output;
+}
+
+void GameEngine::fillFactoriesFromBag(){
+    this->factories[0]->moveToContainer(this->boxLid);
+    resetFirstPlayerToken();
+    for(int factory = 1; factory < 6; factory++){
+        this->factories[factory]->moveToContainer(this->boxLid);
+        for(int tileNo = 0; tileNo < 4; tileNo++){
+            Tile* tile = this->tileBag->getRandomTile();
+            if(tile==nullptr){
+                this->boxLid->moveAllToContainer(this->tileBag);
+                tile = this->tileBag->getRandomTile();
+            }
+            this->factories[factory]->append(tile);
+            this->tileBag->remove(tile);
+        }
+    }
 }

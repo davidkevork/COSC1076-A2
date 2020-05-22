@@ -5,6 +5,8 @@ Tile::Tile(Colour colour){
     this->colour = colour;
 }
 
+
+
 Tile::Tile(std::string colour) {
     if (colour.compare("R") == 0) {
         this->colour = RED;

@@ -1,10 +1,6 @@
 #include "TileBag.h"
 
-TileBag::TileBag(){
-
-    srand((unsigned)time_t(NULL));
-
-}
+TileBag::TileBag(){}
 
 TileBag::~TileBag(){
     for(Tile* tile:this->tiles){
