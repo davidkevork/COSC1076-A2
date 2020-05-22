@@ -19,7 +19,7 @@ Menu::~Menu() {}
 void Menu::runMenu() {
     this->choice = 0;
 
-    while(this->choice != 4) {
+    while(this->choice != 4 || std::cin.eof()!=true) {
         this->printMenu();
         cout << "> ";
         cin >> this->choice;
