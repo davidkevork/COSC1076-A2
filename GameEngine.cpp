@@ -8,6 +8,7 @@
 using std::cin;
 using std::cout;
 using std::endl;
+using std::string;
 
 #define NUM_PLAYERS 2
 #define NUM_FACTORIES 6
@@ -33,7 +34,6 @@ GameEngine::GameEngine() {
     this->playerNumTurn = 0;
     this->players[0] = nullptr;
     this->players[1] = nullptr;
-    this->roundno = 1;
 }
 
 GameEngine::~GameEngine(){
@@ -80,7 +80,7 @@ void GameEngine::startGame(int isloadGame) {
         this->players[1] = player2;
     }
     
-    cout << "=== Let's Play! ===" << endl;
+    cout << "Let's Play!" << endl << endl;
     this->quitGameFlag = false;
     int currentPlayer = isloadGame == 0 ? 0 : this->playerNumTurn;
     while(!this->quitGameFlag){
@@ -198,7 +198,7 @@ void GameEngine::round(int startingPlayer, int isloadGame) {
                 //Handle quit.
                 validInput=true;
                 this->quitGameFlag=true;
-            } else if(cin.eof() || stoi(playerCommand.front()) == EOF) {
+            } else if(cin.eof()) {
                 cout<<"Quitting program..."<<endl;
                 exit(1);
             } else if(playerCommand.front()=="save" && playerCommand.size()>=2){
@@ -219,7 +219,7 @@ void GameEngine::round(int startingPlayer, int isloadGame) {
     }
 }
 
-void GameEngine::saveGame(std::string fileName) {
+void GameEngine::saveGame(string fileName) {
     std::ofstream saveFile(fileName);
 
     saveFile << "// game state data" << endl;
@@ -290,12 +290,12 @@ void GameEngine::saveGame(std::string fileName) {
     saveFile.close();
 }
 
-void GameEngine::loadGame(std::string filename) {
+void GameEngine::loadGame(string filename) {
     std::ifstream saveFile(filename);
 
     if (saveFile.good()) {
         while (!saveFile.eof()) {
-            std::string line;
+            string line;
             std::getline(saveFile, line);
             int gameType = this->GameType(line);
             if (gameType >= 1 && gameType <= 6) {
@@ -305,8 +305,8 @@ void GameEngine::loadGame(std::string filename) {
             } else if (gameType == 8) {
                 this->loadBoxLid(line);
             } else if (gameType == 9 || gameType == 10) {
-                std::string name;
-                std::string points;
+                string name;
+                string points;
                 std::getline(saveFile, name);
                 std::getline(saveFile, line);
                 std::getline(saveFile, points);
@@ -330,8 +330,8 @@ void GameEngine::loadGame(std::string filename) {
     this->startGame(1);
 }
 
-std::vector<std::string> GameEngine::split(const std::string splitString, char delimiter) {
-    std::vector<std::string> out;
+vector<string> GameEngine::split(const string splitString, char delimiter) {
+    vector<string> out;
     std::stringstream stringStream (splitString);
     string item;
     while (getline(stringStream, item, delimiter)) {
@@ -340,7 +340,7 @@ std::vector<std::string> GameEngine::split(const std::string splitString, char d
     return out;
 }
 
-std::string GameEngine::replaceAll(std::string line, std::string replace) {
+string GameEngine::replaceAll(string line, string replace) {
     string data = line;
 	unsigned int startPosition = data.find(replace);
 
@@ -351,28 +351,28 @@ std::string GameEngine::replaceAll(std::string line, std::string replace) {
     return data;
 }
 
-void GameEngine::loadPlayer(std::string name, std::string points, int pos) {
+void GameEngine::loadPlayer(string name, string points, int pos) {
     this->players[pos] = new Player(name, this->boxLid);
     this->players[pos]->setPlayerPoints(std::stoi(points));
 }
 
-void GameEngine::loadTileBag(std::string line) {
-    std::vector<std::string> tileBagString = this->split(this->replaceAll(line, "// Tile Bag"), ' ');
-    for (std::string colour : tileBagString) {
+void GameEngine::loadTileBag(string line) {
+    vector<string> tileBagString = this->split(this->replaceAll(line, "// Tile Bag"), ' ');
+    for (string colour : tileBagString) {
         this->tileBag->append(new Tile(colour));
     }
 }
 
-void GameEngine::loadBoxLid(std::string line) {
-    std::vector<std::string> boxLidString = this->split(this->replaceAll(line, "// Box Lid"), ' ');
-    for (std::string colour : boxLidString) {
+void GameEngine::loadBoxLid(string line) {
+    vector<string> boxLidString = this->split(this->replaceAll(line, "// Box Lid"), ' ');
+    for (string colour : boxLidString) {
         this->boxLid->append(new Tile(colour));
     }
 }
 
-void GameEngine::loadFactories(std::string factories, int pos) {
-    std::vector<std::string> splitString;
-    std::string replace = "";
+void GameEngine::loadFactories(string factories, int pos) {
+    vector<string> splitString;
+    string replace = "";
     if (pos == 0) {
         replace.append("// factory 0 centre table + first player token");
     } else {
@@ -380,15 +380,15 @@ void GameEngine::loadFactories(std::string factories, int pos) {
         replace.append(std::to_string(pos));
     }
     splitString = this->split(this->replaceAll(factories, replace), ' ');
-    for (std::string colour : splitString) {
+    for (string colour : splitString) {
         this->factories[pos]->append(new Tile(colour));
     }
 }
 
-void GameEngine::loadPlayerPattern(std::string pattern, int row, int pos) {
-    std::vector<std::string> playerPatternString = this->split(pattern, ' ');
-    std::vector<Tile*> tiles;
-    for (std::string colour : playerPatternString) {
+void GameEngine::loadPlayerPattern(string pattern, int row, int pos) {
+    vector<string> playerPatternString = this->split(pattern, ' ');
+    vector<Tile*> tiles;
+    for (string colour : playerPatternString) {
         if (colour.compare(".") != 0) {
             tiles.push_back(new Tile(colour));
         }
@@ -396,10 +396,10 @@ void GameEngine::loadPlayerPattern(std::string pattern, int row, int pos) {
     this->players[pos]->appendPatterns(row, tiles);
 }
 
-void GameEngine::loadPlayerMosiac(std::string mosiac, int row, int pos) {
-    std::vector<std::string> playerMosiacString = this->split(mosiac, ' ');
-    std::vector<Tile*> tiles;
-    for (std::string colour : playerMosiacString) {
+void GameEngine::loadPlayerMosiac(string mosiac, int row, int pos) {
+    vector<string> playerMosiacString = this->split(mosiac, ' ');
+    vector<Tile*> tiles;
+    for (string colour : playerMosiacString) {
         if (colour.compare(".") != 0) {
             tiles.push_back(new Tile(colour));
         }
@@ -407,13 +407,13 @@ void GameEngine::loadPlayerMosiac(std::string mosiac, int row, int pos) {
     this->players[pos]->appendMosiac(row, tiles);
 }
 
-void GameEngine::loadPlayerBrokenTiles(std::string brokenTiles, int pos) {
-    std::string replaceString = "// Broken tiles ";
+void GameEngine::loadPlayerBrokenTiles(string brokenTiles, int pos) {
+    string replaceString = "// Broken tiles ";
     replaceString.append(std::to_string(pos));
     replaceString.append(" + first player token");
-    std::vector<std::string> brokenTilesString = this->split(this->replaceAll(brokenTiles, replaceString), ' ');
-    std::vector<Tile*> colourTiles;
-    for (std::string colour : brokenTilesString) {
+    vector<string> brokenTilesString = this->split(this->replaceAll(brokenTiles, replaceString), ' ');
+    vector<Tile*> colourTiles;
+    for (string colour : brokenTilesString) {
         if (colour.compare(".") != 0) {
             colourTiles.push_back(new Tile(colour));
         }
@@ -421,38 +421,38 @@ void GameEngine::loadPlayerBrokenTiles(std::string brokenTiles, int pos) {
     this->players[pos]->appendFloor(colourTiles);
 }
 
-int GameEngine::GameType(std::string line) {
-    if (line.find("// factory 0") != std::string::npos) {
+int GameEngine::GameType(string line) {
+    if (line.find("// factory 0") != string::npos) {
         return 1;
-    } else if (line.find("// factory 1") != std::string::npos) {
+    } else if (line.find("// factory 1") != string::npos) {
         return 2;
-    } else if (line.find("// factory 2") != std::string::npos) {
+    } else if (line.find("// factory 2") != string::npos) {
         return 3;
-    } else if (line.find("// factory 3") != std::string::npos) {
+    } else if (line.find("// factory 3") != string::npos) {
         return 4;
-    } else if (line.find("// factory 4") != std::string::npos) {
+    } else if (line.find("// factory 4") != string::npos) {
         return 5;
-    } else if (line.find("// factory 5") != std::string::npos) {
+    } else if (line.find("// factory 5") != string::npos) {
         return 6;
-    } else if (line.find("// Tile Bag") != std::string::npos) {
+    } else if (line.find("// Tile Bag") != string::npos) {
         return 7;
-    } else if (line.find("// Box Lid") != std::string::npos) {
+    } else if (line.find("// Box Lid") != string::npos) {
         return 8;
-    } else if (line.find("// player 1 save data") != std::string::npos) {
+    } else if (line.find("// player 1 save data") != string::npos) {
         return 9;
-    } else if (line.find("// player 2 save data") != std::string::npos) {
+    } else if (line.find("// player 2 save data") != string::npos) {
         return 10;
-    } else if (line.find("// Player 1 Patterns") != std::string::npos) {
+    } else if (line.find("// Player 1 Patterns") != string::npos) {
         return 11;
-    } else if (line.find("// Player 2 Patterns") != std::string::npos) {
+    } else if (line.find("// Player 2 Patterns") != string::npos) {
         return 12;
-    } else if (line.find("// Player 1 Mosaic/GameBoard") != std::string::npos) {
+    } else if (line.find("// Player 1 Mosaic/GameBoard") != string::npos) {
         return 13;
-    } else if (line.find("// Player 2 Mosaic/GameBoard") != std::string::npos) {
+    } else if (line.find("// Player 2 Mosaic/GameBoard") != string::npos) {
         return 14;
-    } else if (line.find("// Broken tiles 1 + first player token") != std::string::npos) {
+    } else if (line.find("// Broken tiles 1 + first player token") != string::npos) {
         return 15;
-    } else if (line.find("// Broken tiles 2 + first player token") != std::string::npos) {
+    } else if (line.find("// Broken tiles 2 + first player token") != string::npos) {
         return 16;
     } else {
         return -1;
