@@ -194,15 +194,15 @@ void GameEngine::round(int startingPlayer, int isloadGame) {
                     cout<<"Error processing turn command."<<endl;
                 }
             } else if(playerCommand.front()=="quit"){
-                cout<<"Quitting program..."<<endl;
+                cout<<"Quitting to menu..."<<endl<<endl;
                 //Handle quit.
                 validInput=true;
                 this->quitGameFlag=true;
             } else if(cin.eof()) {
                 cout<<"Quitting program..."<<endl;
+                //Handle EOF.
                 validInput=true;
                 this->quitGameFlag=true;
-                //exit(1);
             } else if(playerCommand.front()=="save" && playerCommand.size()>=2){
                 cout<<"Saving to file: "<<playerCommand.at(1)<<".azul"<<endl;
                 this->saveGame(playerCommand.at(1));
